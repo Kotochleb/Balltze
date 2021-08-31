@@ -1,0 +1,65 @@
+balltze:
+  # PUBLISH ALL STATE JOINTS
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 30
+
+
+  # FRONT RIGHT LEG
+  fr_base_link_to_coxa_transmission:
+    type: effort_controllers/JointPositionController
+    joint: fr_base_link_to_coxa_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  fr_coxa_to_femur_transmission:
+    type: effort_controllers/JointPositionController
+    joint: fr_coxa_to_femur_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  fr_femur_to_tibia_transmission:
+    type: effort_controllers/JointPositionController
+    joint: fr_femur_to_tibia_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+
+  # FRONT LEFT LEG
+  fl_base_link_to_coxa_transmission:
+    type: effort_controllers/JointPositionController
+    joint: fl_base_link_to_coxa_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  fl_coxa_to_femur_transmission:
+    type: effort_controllers/JointPositionController
+    joint: fl_coxa_to_femur_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  fl_femur_to_tibia_transmission:
+    type: effort_controllers/JointPositionController
+    joint: fl_femur_to_tibia_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+
+  # REAR RIGHT LEG
+  rr_base_link_to_coxa_transmission:
+    type: effort_controllers/JointPositionController
+    joint: rr_base_link_to_coxa_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  rr_coxa_to_femur_transmission:
+    type: effort_controllers/JointPositionController
+    joint: rr_coxa_to_femur_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  rr_femur_to_tibia_transmission:
+    type: effort_controllers/JointPositionController
+    joint: rr_femur_to_tibia_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+
+  # REAR LEFT LEG
+  rl_base_link_to_coxa_transmission:
+    type: effort_controllers/JointPositionController
+    joint: rl_base_link_to_coxa_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  rl_coxa_to_femur_transmission:
+    type: effort_controllers/JointPositionController
+    joint: rl_coxa_to_femur_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  rl_femur_to_tibia_transmission:
+    type: effort_controllers/JointPositionController
+    joint: rl_femur_to_tibia_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}

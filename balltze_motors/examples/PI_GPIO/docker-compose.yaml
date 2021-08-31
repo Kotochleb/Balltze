@@ -1,0 +1,18 @@
+version: "3.4"
+
+services:
+  balltze_motors:
+    build:
+      context: ./../../../
+      dockerfile: ./balltze_motors/Dockerfile
+    privileged: true
+    volumes:
+      - /dev:/dev
+      - type: bind
+        source: ./../../../balltze_motors/balltze_motors
+        target: /ros2_ws/src/balltze_motors
+      - type: bind
+        source: ./../../../balltze_motors
+        target: /ros2_ws/src/balltze_msgs
+    stdin_open: true
+    tty: true

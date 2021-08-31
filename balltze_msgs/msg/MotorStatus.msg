@@ -1,0 +1,2 @@
+float64 temps
+float64 voltages

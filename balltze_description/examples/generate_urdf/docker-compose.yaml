@@ -1,0 +1,11 @@
+version: "3.4"
+
+services:
+  balltze_description:
+    build:
+      context: ./../../
+      dockerfile: ./examples/Dockerfile
+    volumes:
+      - ./../../balltze_description:/ros2_ws/src/balltze_description:rw
+    command: ros2 run xacro xacro /ros2_ws/src/balltze_description/urdf/balltze.urdf.xacro
+    
