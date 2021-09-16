@@ -23,6 +23,6 @@ RUN git clone --recursive --branch=master --single-branch https://github.com/chv
 RUN apt clean && \
     rm -rf /var/lib/apt/lists/*
 
-# COPY ./ros_entrypoint.sh /
-# ENTRYPOINT ["/ros_entrypoint.sh"]
+COPY ./ros_entrypoint.sh /
+ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
