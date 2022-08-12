@@ -44,8 +44,8 @@ qtcreator-*
 
 *~
 
-# Emacs
-.#*
-
 # Catkin custom files
 CATKIN_IGNORE
+
+# Not include repose downloaded by VCS
+vcs_repos

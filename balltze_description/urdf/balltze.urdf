@@ -16,20 +16,20 @@
   <link name="base_link">
     <visual>
       <geometry>
-        <box size="0.2                      0.1                      0.05"/>
+        <box size="0.5                      0.2                      0.1"/>
       </geometry>
       <origin xyz="0 0 0"/>
     </visual>
     <collision>
       <geometry>
-        <box size="0.2                      0.1                      0.05"/>
+        <box size="0.5                      0.2                      0.1"/>
       </geometry>
     </collision>
     `
 
       
     <inertial>
-      <mass value="1.0"/>
+      <mass value="10.0"/>
       <inertia ixx="0.00022432" ixy="0.0" ixz="0.0" iyy="0.0041164" iyz="0.0" izz="0.00422412"/>
     </inertial>
   </link>
@@ -42,15 +42,15 @@
   <link name="fr_coxa">
     <visual>
       <geometry>
-        <box size="0.01                          0.01                          0.01"/>
+        <box size="0.03                          0.03                          0.03"/>
       </geometry>
       <origin rpy="1.5707963267948966 0 0" xyz="0.0 0.0 -0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.005"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.005 0 0"/>
+      <origin rpy="0 0 0" xyz="0.015 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -68,15 +68,15 @@
   <link name="fr_femur">
     <visual>
       <geometry>
-        <box size="0.06                          0.02                          0.02"/>
+        <box size="0.16                          0.03                          0.03"/>
       </geometry>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.03 0.0 0.0"/>
+      <origin rpy="1.5707963267948966 0 0" xyz="0.08 0.0 0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.049999999999999996 0 0"/>
+      <origin rpy="0 0 0" xyz="0.14500000000000002 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -94,15 +94,15 @@
   <link name="fr_tibia">
     <visual>
       <geometry>
-        <box size="0.06                          0.02                          0.02"/>
+        <box size="0.16                          0.03                          0.03"/>
       </geometry>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.03 0.0 0.0"/>
+      <origin rpy="1.5707963267948966 0 0" xyz="0.08 0.0 0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.049999999999999996 0 0"/>
+      <origin rpy="0 0 0" xyz="0.14500000000000002 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -119,10 +119,10 @@
   <!-- JOINT DEFINITION -->
   <joint name="fr_base_link_to_coxa_joint" type="revolute">
     <parent link="base_link"/>
-    <origin rpy="0 0 0" xyz="0.1 -0.05 0.0"/>
+    <origin rpy="0 0 0" xyz="0.25 -0.13 0.0"/>
     <child link="fr_coxa"/>
     <axis xyz="1 0 0"/>
-    <limit effort="1.5" lower="-0.785398163" upper="0.785398163" velocity="0.003141593"/>
+    <limit effort="200" lower="-0.785398163" upper="0.785398163" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- JOINT DEFINITION -->
@@ -131,31 +131,31 @@
     <origin rpy="0 1.5707963267948966 0" xyz="0.0 0.0 0.0"/>
     <child link="fr_femur"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="1.5" lower="-2.35619449" upper="1.570796327" velocity="0.003141593"/>
+    <limit effort="200" lower="-2.35619449" upper="1.570796327" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- JOINT DEFINITION -->
   <joint name="fr_femur_to_tibia_joint" type="revolute">
     <parent link="fr_femur"/>
-    <origin rpy="0 0 0" xyz="0.06 0.0 0.0"/>
+    <origin rpy="0 0 0" xyz="0.16 0.0 0.0"/>
     <child link="fr_tibia"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="1.5" lower="0.0" upper="3.141592654" velocity="0.003141593"/>
+    <limit effort="200" lower="0.0" upper="3.141592654" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- LINK DEFINITION -->
   <link name="fl_coxa">
     <visual>
       <geometry>
-        <box size="0.01                          0.01                          0.01"/>
+        <box size="0.03                          0.03                          0.03"/>
       </geometry>
       <origin rpy="1.5707963267948966 0 0" xyz="0.0 0.0 -0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.005"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.005 0 0"/>
+      <origin rpy="0 0 0" xyz="0.015 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -173,15 +173,15 @@
   <link name="fl_femur">
     <visual>
       <geometry>
-        <box size="0.06                          0.02                          0.02"/>
+        <box size="0.16                          0.03                          0.03"/>
       </geometry>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.03 0.0 0.0"/>
+      <origin rpy="1.5707963267948966 0 0" xyz="0.08 0.0 0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.049999999999999996 0 0"/>
+      <origin rpy="0 0 0" xyz="0.14500000000000002 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -199,15 +199,15 @@
   <link name="fl_tibia">
     <visual>
       <geometry>
-        <box size="0.06                          0.02                          0.02"/>
+        <box size="0.16                          0.03                          0.03"/>
       </geometry>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.03 0.0 0.0"/>
+      <origin rpy="1.5707963267948966 0 0" xyz="0.08 0.0 0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.049999999999999996 0 0"/>
+      <origin rpy="0 0 0" xyz="0.14500000000000002 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -224,10 +224,10 @@
   <!-- JOINT DEFINITION -->
   <joint name="fl_base_link_to_coxa_joint" type="revolute">
     <parent link="base_link"/>
-    <origin rpy="0 0 0" xyz="0.1 0.05 0.0"/>
+    <origin rpy="0 0 0" xyz="0.25 0.13 0.0"/>
     <child link="fl_coxa"/>
     <axis xyz="1 0 0"/>
-    <limit effort="1.5" lower="-0.785398163" upper="0.785398163" velocity="0.003141593"/>
+    <limit effort="200" lower="-0.785398163" upper="0.785398163" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- JOINT DEFINITION -->
@@ -236,31 +236,31 @@
     <origin rpy="0 1.5707963267948966 0" xyz="0.0 0.0 0.0"/>
     <child link="fl_femur"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="1.5" lower="-2.35619449" upper="1.570796327" velocity="0.003141593"/>
+    <limit effort="200" lower="-2.35619449" upper="1.570796327" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- JOINT DEFINITION -->
   <joint name="fl_femur_to_tibia_joint" type="revolute">
     <parent link="fl_femur"/>
-    <origin rpy="0 0 0" xyz="0.06 0.0 0.0"/>
+    <origin rpy="0 0 0" xyz="0.16 0.0 0.0"/>
     <child link="fl_tibia"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="1.5" lower="0.0" upper="3.141592654" velocity="0.003141593"/>
+    <limit effort="200" lower="0.0" upper="3.141592654" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- LINK DEFINITION -->
   <link name="rr_coxa">
     <visual>
       <geometry>
-        <box size="0.01                          0.01                          0.01"/>
+        <box size="0.03                          0.03                          0.03"/>
       </geometry>
       <origin rpy="1.5707963267948966 0 0" xyz="0.0 0.0 -0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.005"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.005 0 0"/>
+      <origin rpy="0 0 0" xyz="0.015 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -278,15 +278,15 @@
   <link name="rr_femur">
     <visual>
       <geometry>
-        <box size="0.06                          0.02                          0.02"/>
+        <box size="0.16                          0.03                          0.03"/>
       </geometry>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.03 0.0 0.0"/>
+      <origin rpy="1.5707963267948966 0 0" xyz="0.08 0.0 0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.049999999999999996 0 0"/>
+      <origin rpy="0 0 0" xyz="0.14500000000000002 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -304,15 +304,15 @@
   <link name="rr_tibia">
     <visual>
       <geometry>
-        <box size="0.06                          0.02                          0.02"/>
+        <box size="0.16                          0.03                          0.03"/>
       </geometry>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.03 0.0 0.0"/>
+      <origin rpy="1.5707963267948966 0 0" xyz="0.08 0.0 0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.049999999999999996 0 0"/>
+      <origin rpy="0 0 0" xyz="0.14500000000000002 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -329,10 +329,10 @@
   <!-- JOINT DEFINITION -->
   <joint name="rr_base_link_to_coxa_joint" type="revolute">
     <parent link="base_link"/>
-    <origin rpy="0 0 0" xyz="-0.1 -0.05 0.0"/>
+    <origin rpy="0 0 0" xyz="-0.25 -0.13 0.0"/>
     <child link="rr_coxa"/>
     <axis xyz="1 0 0"/>
-    <limit effort="1.5" lower="-0.785398163" upper="0.785398163" velocity="0.003141593"/>
+    <limit effort="200" lower="-0.785398163" upper="0.785398163" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- JOINT DEFINITION -->
@@ -341,31 +341,31 @@
     <origin rpy="0 1.5707963267948966 0" xyz="0.0 0.0 0.0"/>
     <child link="rr_femur"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="1.5" lower="-2.35619449" upper="1.570796327" velocity="0.003141593"/>
+    <limit effort="200" lower="-2.35619449" upper="1.570796327" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- JOINT DEFINITION -->
   <joint name="rr_femur_to_tibia_joint" type="revolute">
     <parent link="rr_femur"/>
-    <origin rpy="0 0 0" xyz="0.06 0.0 0.0"/>
+    <origin rpy="0 0 0" xyz="0.16 0.0 0.0"/>
     <child link="rr_tibia"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="1.5" lower="0.0" upper="3.141592654" velocity="0.003141593"/>
+    <limit effort="200" lower="0.0" upper="3.141592654" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- LINK DEFINITION -->
   <link name="rl_coxa">
     <visual>
       <geometry>
-        <box size="0.01                          0.01                          0.01"/>
+        <box size="0.03                          0.03                          0.03"/>
       </geometry>
       <origin rpy="1.5707963267948966 0 0" xyz="0.0 0.0 -0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.005"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.005 0 0"/>
+      <origin rpy="0 0 0" xyz="0.015 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -383,15 +383,15 @@
   <link name="rl_femur">
     <visual>
       <geometry>
-        <box size="0.06                          0.02                          0.02"/>
+        <box size="0.16                          0.03                          0.03"/>
       </geometry>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.03 0.0 0.0"/>
+      <origin rpy="1.5707963267948966 0 0" xyz="0.08 0.0 0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.049999999999999996 0 0"/>
+      <origin rpy="0 0 0" xyz="0.14500000000000002 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -409,15 +409,15 @@
   <link name="rl_tibia">
     <visual>
       <geometry>
-        <box size="0.06                          0.02                          0.02"/>
+        <box size="0.16                          0.03                          0.03"/>
       </geometry>
-      <origin rpy="1.5707963267948966 0 0" xyz="0.03 0.0 0.0"/>
+      <origin rpy="1.5707963267948966 0 0" xyz="0.08 0.0 0.0"/>
     </visual>
     <collision>
       <geometry>
-        <sphere radius="0.01"/>
+        <sphere radius="0.015"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.049999999999999996 0 0"/>
+      <origin rpy="0 0 0" xyz="0.14500000000000002 0 0"/>
     </collision>
     <inertial>
       <mass value="0.12131"/>
@@ -434,10 +434,10 @@
   <!-- JOINT DEFINITION -->
   <joint name="rl_base_link_to_coxa_joint" type="revolute">
     <parent link="base_link"/>
-    <origin rpy="0 0 0" xyz="-0.1 0.05 0.0"/>
+    <origin rpy="0 0 0" xyz="-0.25 0.13 0.0"/>
     <child link="rl_coxa"/>
     <axis xyz="1 0 0"/>
-    <limit effort="1.5" lower="-0.785398163" upper="0.785398163" velocity="0.003141593"/>
+    <limit effort="200" lower="-0.785398163" upper="0.785398163" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- JOINT DEFINITION -->
@@ -446,16 +446,16 @@
     <origin rpy="0 1.5707963267948966 0" xyz="0.0 0.0 0.0"/>
     <child link="rl_femur"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="1.5" lower="-2.35619449" upper="1.570796327" velocity="0.003141593"/>
+    <limit effort="200" lower="-2.35619449" upper="1.570796327" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <!-- JOINT DEFINITION -->
   <joint name="rl_femur_to_tibia_joint" type="revolute">
     <parent link="rl_femur"/>
-    <origin rpy="0 0 0" xyz="0.06 0.0 0.0"/>
+    <origin rpy="0 0 0" xyz="0.16 0.0 0.0"/>
     <child link="rl_tibia"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="1.5" lower="0.0" upper="3.141592654" velocity="0.003141593"/>
+    <limit effort="200" lower="0.0" upper="3.141592654" velocity="5.0"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
 </robot>

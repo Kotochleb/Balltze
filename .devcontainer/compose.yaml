@@ -1,0 +1,16 @@
+services:
+  workspace:
+    build: .
+    ipc: host
+    network_mode: host
+    privileged: true
+    tty: true
+    stdin_open: true
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    volumes:
+      - ../:/ros2_ws/src:cached
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY

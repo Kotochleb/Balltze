@@ -1,0 +1,28 @@
+{
+	"dockerComposeFile": [
+		"compose.yaml"
+	],
+	"initializeCommand": "xhost +local:docker",
+	"onCreateCommand": "/bin/bash /ros2_ws/setup.sh",
+	"service": "workspace",
+	"workspaceFolder": "/ros2_ws/src",
+	"shutdownAction": "stopCompose",
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"terminal.integrated.profiles.linux": {
+			"bash": {
+				"path": "bash"
+			}
+		},
+		"terminal.integrated.defaultProfile.linux": "bash"
+	},
+	"extensions": [
+		"ms-vscode.cpptools",
+		"ms-python.python",
+		"ajshort.msg",
+		"twxs.cmake",
+		"redhat.vscode-xml",
+		"actboy168.tasks",
+		"brpaz.file-templates"
+	]
+}

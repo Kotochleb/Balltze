@@ -1,0 +1,159 @@
+# Order of values in arrays
+# 0 - front right
+# 1 - front left
+# 2 - rear right
+# 3 - rear left
+
+
+robot:
+  name: 'balltze'
+
+base_link:
+  name: 'base_link'
+  link:
+    length: [0.5]
+    width: [0.2]
+    thickness: [0.1]
+    mesh:
+      - 'None'
+    collision:
+      - 'None'
+    mass: [14.0]
+    inertia:
+      - {ixx: 0.30333333, ixy: 0.00, ixz: 0.00,
+         iyy: 0.33833333,  iyz: 0.00, izz: 0.33833333}
+
+coxa:
+  name: 'coxa'
+  link:
+    length: [0.03, 0.03, 0.03, 0.03]
+    width: [0.03, 0.03, 0.03, 0.03]
+    mesh:
+      - 'None'
+      - 'None'
+      - 'None'
+      - 'None'
+    collision: 
+      - 'None'
+      - 'None'
+      - 'None'
+      - 'None'
+    mass: [0.10, 0.10, 0.10, 0.10]
+    inertia:
+      - {ixx: 7.5e-06, ixy:  0.0, ixz: 0.0,
+         iyy: 7.5e-06, iyz: 0.0, izz:  7.5e-06}
+      - {ixx: 7.5e-06, ixy:  0.0, ixz: 0.0,
+         iyy: 7.5e-06, iyz: 0.0, izz:  7.5e-06}
+      - {ixx: 7.5e-06, ixy:  0.0, ixz: 0.0,
+         iyy: 7.5e-06, iyz: 0.0, izz:  7.5e-06}
+      - {ixx: 7.5e-06, ixy:  0.0, ixz: 0.0,
+         iyy: 7.5e-06, iyz: 0.0, izz:  7.5e-06}
+    origin:
+      - {x: 0.0, y: 0.0, z: -0.0}
+      - {x: 0.0, y: 0.0, z: -0.0}
+      - {x: 0.0, y: 0.0, z: -0.0}
+      - {x: 0.0, y: 0.0, z: -0.0}
+  joint:
+    limit:
+      lower: [-0.785398163, -0.785398163, -0.785398163, -0.785398163]
+      upper: [+0.785398163, +0.785398163, +0.785398163, +0.785398163]
+    origin:
+      - {x:  0.25, y: -0.13, z: 0.00}
+      - {x:  0.25, y:  0.13, z: 0.00}
+      - {x: -0.25, y: -0.13, z: 0.00}
+      - {x: -0.25, y:  0.13, z: 0.00}
+    damping: [0.0, 0.0, 0.0, 0.0]
+    friction: [0.0, 0.0, 0.0, 0.0]
+    velocity: 5.0
+    effort: 31
+
+
+
+femur:
+  name: 'femur'
+  link:
+    length: [0.16, 0.16, 0.16, 0.16]
+    width: [0.03, 0.03, 0.03, 0.03]
+    mesh:
+      - 'None'
+      - 'None'
+      - 'None'
+      - 'None'
+    collision:
+      - 'None'
+      - 'None'
+      - 'None'
+      - 'None'
+    mass: [0.12, 0.12, 0.12, 0.12]
+    inertia:
+      - {ixx: 1.53e-04, ixy:  0.0, ixz: 0.0,
+         iyy: 1.53e-04, iyz: 0.0, izz:  1.80e-05}
+      - {ixx: 1.53e-04, ixy:  0.0, ixz: 0.0,
+         iyy: 1.53e-04, iyz: 0.0, izz:  1.80e-05}
+      - {ixx: 1.53e-04, ixy:  0.0, ixz: 0.0,
+         iyy: 1.53e-04, iyz: 0.0, izz:  1.80e-05}
+      - {ixx: 1.53e-04, ixy:  0.0, ixz: 0.0,
+         iyy: 1.53e-04, iyz: 0.0, izz:  1.80e-05}
+    origin:
+      - {x: 0.08, y: 0.00, z: 0.00}
+      - {x: 0.08, y: 0.00, z: 0.00}
+      - {x: 0.08, y: 0.00, z: 0.00}
+      - {x: 0.08, y: 0.00, z: 0.00}
+  joint:
+    limit:
+      lower: [-2.356194490, -2.356194490, -2.356194490, -2.356194490]
+      upper: [+1.570796327, +1.570796327, +1.570796327, +1.570796327]
+    origin: 
+      - {x: 0.0, y: 0.0, z: 0.0}
+      - {x: 0.0, y: 0.0, z: 0.0}
+      - {x: 0.0, y: 0.0, z: 0.0}
+      - {x: 0.0, y: 0.0, z: 0.0}
+    damping: [0.0, 0.0, 0.0, 0.0]
+    friction: [0.0, 0.0, 0.0, 0.0]
+    velocity: 5.0
+    effort: 31
+
+
+tibia:
+  name: 'tibia'
+  link:
+    length: [0.16, 0.16, 0.16, 0.16]
+    width: [0.03, 0.03, 0.03, 0.03]
+    mesh:
+      - 'None'
+      - 'None'
+      - 'None'
+      - 'None'
+    collision:
+      - 'None'
+      - 'None'
+      - 'None'
+      - 'None'
+    mass: [0.12, 0.12, 0.12, 0.12]
+    inertia:
+      - {ixx: 1.53e-04, ixy:  0.0, ixz: 0.0,
+         iyy: 1.53e-04, iyz: 0.0, izz:  1.80e-05}
+      - {ixx: 1.53e-04, ixy:  0.0, ixz: 0.0,
+         iyy: 1.53e-04, iyz: 0.0, izz:  1.80e-05}
+      - {ixx: 1.53e-04, ixy:  0.0, ixz: 0.0,
+         iyy: 1.53e-04, iyz: 0.0, izz:  1.80e-05}
+      - {ixx: 1.53e-04, ixy:  0.0, ixz: 0.0,
+         iyy: 1.53e-04, iyz: 0.0, izz:  1.80e-05}
+    origin:
+      - {x: 0.08, y: 0.0, z: 0.0}
+      - {x: 0.08, y: 0.0, z: 0.0}
+      - {x: 0.08, y: 0.0, z: 0.0}
+      - {x: 0.08, y: 0.0, z: 0.0}
+  joint:
+    limit:
+      lower: [ 0.000000000,  0.000000000,  0.000000000,  0.000000000]
+      upper: [+3.141592654, +3.141592654, +3.141592654, +3.141592654]
+    origin: 
+      - {x: 0.16, y: 0.0, z: 0.0}
+      - {x: 0.16, y: 0.0, z: 0.0}
+      - {x: 0.16, y: 0.0, z: 0.0}
+      - {x: 0.16, y: 0.0, z: 0.0}
+    damping: [0.0, 0.0, 0.0, 0.0]
+    friction: [0.0, 0.0, 0.0, 0.0]
+    velocity: 5.0
+    effort: 31
