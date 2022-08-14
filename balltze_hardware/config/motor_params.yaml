@@ -1,0 +1,57 @@
+dynamixel_motor_controller_node:
+    ros__parameters:
+      serial_port: /dev/ttyUSB1
+      baudrate: 1000000
+      return_delay: 50
+      bus_error_count: 20
+      error_clear_timeout: 5.0
+      joint_state_msg_link: base_link
+      joint_names: [joint_1, joint_2, joint_3]
+
+      joint_1:
+        id: 4
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5
+
+      joint_2:
+        id: 5
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5
+      
+      joint_3:
+        id: 5
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5

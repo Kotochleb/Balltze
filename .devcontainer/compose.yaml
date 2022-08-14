@@ -12,5 +12,7 @@ services:
     volumes:
       - ../:/ros2_ws/src:cached
       - /tmp/.X11-unix:/tmp/.X11-unix
+    devices:
+      - /dev:/dev
     environment:
       - DISPLAY

@@ -1,0 +1,10 @@
+<library path="balltze_hardware_plugins">
+    <class
+        name="balltze_hardware/BalltzeHardware"
+        type="balltze_hardware::BalltzeMotorSystem"
+        base_class_type="balltze_hardware::BalltzeHardwareInterface">
+        <description>
+            Balltze Dynamixel hardware
+        </description>
+    </class>
+</library>
