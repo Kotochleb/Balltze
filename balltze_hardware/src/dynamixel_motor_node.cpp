@@ -34,6 +34,8 @@ DynamixelMotorControllerNode::DynamixelMotorControllerNode() :
   this->declare_parameter<float>("error_clear_timeout", 5.0);
   this->declare_parameter<std::string>("joint_state_msg_link", "base_link");
   this->declare_parameter<std::vector<std::string>>("joint_names");
+  this->declare_parameter<float>("frequency", 20.0);
+  
 
 
   std::vector<std::string> joint_names;
@@ -66,7 +68,6 @@ DynamixelMotorControllerNode::DynamixelMotorControllerNode() :
     this->get_parameter(joint + ".safety.max_voltage", motor->safety.max_voltage);
     this->get_parameter(joint + ".safety.max_effort", motor->safety.max_effort);
 
-    // motors_.insert(std::initializer_list<std::pair<std::string, Motor>(joint,motor));
     motors_.insert({joint, motor});
   }
 
@@ -77,6 +78,9 @@ DynamixelMotorControllerNode::DynamixelMotorControllerNode() :
   this->get_parameter("bus_error_count", bus_error_count_);
   this->get_parameter("error_clear_timeout", error_clear_timeout_);
   this->get_parameter("joint_state_msg_link", joint_state_msg_link_);
+
+  float frequency;
+  this->get_parameter("frequency", frequency);
 
   setup_serial_port();
   RCLCPP_INFO(this->get_logger(), "Serial port initialised.");
@@ -98,11 +102,10 @@ DynamixelMotorControllerNode::DynamixelMotorControllerNode() :
   querry_joints();
 
 
-  joint_state_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>("joint_state", 10);
-  
+  joint_state_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
 
   timer_ = this->create_wall_timer(
-    50ms,
+    std::chrono::duration<float>(1.0f/frequency),
     std::bind(&DynamixelMotorControllerNode::timer_callback,
     this));
 
@@ -259,6 +262,9 @@ float DynamixelMotorControllerNode::data_to_pos(uint8_t *data) {
 
 float DynamixelMotorControllerNode::data_to_vel(uint8_t *data) {
   int16_t raw_vel = (uint16_t(data[1]) << 8) + uint16_t(data[0]);
+  if (raw_vel >= 1023) {
+    raw_vel = -1 * (raw_vel - 1024);
+  }
   // raw velocity to RPM
   float velocity = float(raw_vel) * 0.111f;
   // return in rad/s
@@ -267,6 +273,9 @@ float DynamixelMotorControllerNode::data_to_vel(uint8_t *data) {
 
 float DynamixelMotorControllerNode::data_to_eff(uint8_t *data) {
   int16_t raw_eff = (int16_t(data[1]) << 8) + int16_t(data[0]);
+  if (raw_eff >= 1023) {
+    raw_eff = -1 * (raw_eff - 1024);
+  }
   // normalise raw effort
   float effort = float(raw_eff) / 1023.0f;
   // return in nm
