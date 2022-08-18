@@ -14,6 +14,8 @@ find_package(ament_cmake REQUIRED)
 find_package(dynamixel_sdk REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(trajectory_msgs REQUIRED)
+find_package(control_msgs REQUIRED)
 
 include_directories(include)
 
@@ -21,6 +23,8 @@ add_executable(dynamixel_motor_node src/dynamixel_motor_node.cpp)
 ament_target_dependencies(dynamixel_motor_node
   dynamixel_sdk
   sensor_msgs
+  trajectory_msgs
+  control_msgs
   rclcpp
 )
 
