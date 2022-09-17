@@ -19,14 +19,14 @@ find_package(control_msgs REQUIRED)
 
 include_directories(include)
 
-add_executable(dynamixel_motor_node src/dynamixel_motor_node.cpp)
-ament_target_dependencies(dynamixel_motor_node
-  dynamixel_sdk
-  sensor_msgs
-  trajectory_msgs
-  control_msgs
-  rclcpp
-)
+# add_executable(dynamixel_motor_node src/dynamixel_motor_node.cpp)
+# ament_target_dependencies(dynamixel_motor_node
+#   dynamixel_sdk
+#   sensor_msgs
+#   trajectory_msgs
+#   control_msgs
+#   rclcpp
+# )
 
 install(TARGETS
   dynamixel_motor_node

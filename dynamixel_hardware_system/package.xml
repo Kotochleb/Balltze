@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>balltze_hardware</name>
+  <name>dynamixel_hardware_system</name>
   <version>0.0.0</version>
   <description>Dynamixel AX12-A ros2_controll hardware controllers</description>
   <maintainer email="krzy.wojciecho@gmail.com">Krzysztof Wojciechowski</maintainer>
@@ -22,12 +22,8 @@
   <depend>controller_manager</depend>
   <depend>pluginlib</depend>
   <depend>dynamixel_sdk</depend>
-
-  <depend>std_msgs</depend>
-  <depend>sensor_msgs</depend>
-  <depend>trajectory_msgs</depend> 
-  <depend>control_msgs</depend>
-
+  <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
 
   <test_depend>ament_lint_common</test_depend>
   <test_depend>ament_lint_auto</test_depend>
@@ -35,6 +31,6 @@
 
   <export>
     <build_type>ament_cmake</build_type>
-    <gazebo_ros2_control plugin="${prefix}/balltze_hardware_plugins.xml"/>
+    <gazebo_ros2_control plugin="${prefix}/dynamixel_hardware_plugins.xml"/>
   </export>
 </package>

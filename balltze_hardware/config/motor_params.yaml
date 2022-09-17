@@ -5,12 +5,12 @@ dynamixel_motor_controller_node:
       return_delay: 50
       bus_error_count: 20
       error_timeout: 5.0
-      frequency: 20.0
+      frequency: 50.0
       joint_state_msg_link: base_link
-      joint_names: [joint_1, joint_2, joint_3] #, joint_4, joint_5, joint_6]
+      joint_names: [joint_1, joint_2, joint_3, joint_4, joint_5, joint_6, joint_7, joint_8, joint_9, joint_10, joint_11, joint_12]
 
       joint_1:
-        id: 4
+        id: 1
         lower_limit:
           position: -1.57
           velocity: -6.17
@@ -26,7 +26,7 @@ dynamixel_motor_controller_node:
           max_effort: 1.5
 
       joint_2:
-        id: 5
+        id: 2
         lower_limit:
           position: -1.57
           velocity: -6.17
@@ -42,6 +42,54 @@ dynamixel_motor_controller_node:
           max_effort: 1.5
       
       joint_3:
+        id: 3
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5
+
+      joint_4:
+        id: 4
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5
+
+      joint_5:
+        id: 5
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5
+      
+      joint_6:
         id: 6
         lower_limit:
           position: -1.57
@@ -57,50 +105,98 @@ dynamixel_motor_controller_node:
           max_voltage: 1.6
           max_effort: 1.5
 
-      # joint_4:
-      #   id: 7
-      #   lower_limit:
-      #     position: -1.57
-      #     velocity: -6.17
-      #     effort: -1.5
-      #   upper_limit:
-      #     position: 1.57
-      #     velocity: 6.17
-      #     effort: 1.5
-      #   safety:
-      #     temp_lim: 85.0
-      #     min_voltage: 9.0
-      #     max_voltage: 1.6
-      #     max_effort: 1.5
+      joint_7:
+        id: 7
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5
 
-      # joint_5:
-      #   id: 8
-      #   lower_limit:
-      #     position: -1.57
-      #     velocity: -6.17
-      #     effort: -1.5
-      #   upper_limit:
-      #     position: 1.57
-      #     velocity: 6.17
-      #     effort: 1.5
-      #   safety:
-      #     temp_lim: 85.0
-      #     min_voltage: 9.0
-      #     max_voltage: 1.6
-      #     max_effort: 1.5
+      joint_8:
+        id: 8
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5
       
-      # joint_6:
-      #   id: 9
-      #   lower_limit:
-      #     position: -1.57
-      #     velocity: -6.17
-      #     effort: -1.5
-      #   upper_limit:
-      #     position: 1.57
-      #     velocity: 6.17
-      #     effort: 1.5
-      #   safety:
-      #     temp_lim: 85.0
-      #     min_voltage: 9.0
-      #     max_voltage: 1.6
-      #     max_effort: 1.5
+      joint_9:
+        id: 9
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5
+
+      joint_10:
+        id: 10
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5
+
+      joint_11:
+        id: 11
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5
+      
+      joint_12:
+        id: 12
+        lower_limit:
+          position: -1.57
+          velocity: -6.17
+          effort: -1.5
+        upper_limit:
+          position: 1.57
+          velocity: 6.17
+          effort: 1.5
+        safety:
+          temp_lim: 85.0
+          min_voltage: 9.0
+          max_voltage: 1.6
+          max_effort: 1.5

@@ -438,8 +438,8 @@ void DynamixelMotorControllerNode::check_bus_errors() {
 // void DynamixelMotorControllerNode::setup_motors() {
 //   for (auto const& [joint, motor] : motors_) {
 //     uint8_t data[STATE_PARAMS_NUM_BUTES];
-//     packetHandler_->regWriteTxRx(portHandler_, motor->id, STATE_VOLTAGE_ADDRESS,
-//       STATE_PARAMS_NUM_BUTES, packetHandler_, &motor->error_code);
+    // packetHandler_->regWriteTxRx(portHandler_, motor->id, STATE_VOLTAGE_ADDRESS,
+    //   STATE_PARAMS_NUM_BUTES, packetHandler_, &motor->error_code);
 
 //     if (motor->error_code) {
 //       motor->error_cnt++;

@@ -81,7 +81,8 @@
         "cinttypes": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "climits": "cpp"
     },
     "python.analysis.extraPaths": [
         "/opt/ros/humble/lib/python3.8/site-packages/"

@@ -2,206 +2,160 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- LEG MACRO -->
-  <xacro:macro name="leg" params="leg_prefix props use_ros_path">
+  <xacro:macro name="leg" params="leg_prefix robot_width robot_length">
 
-    <xacro:property name="robot_props" value="${props}" />
+    <xacro:property name="coxa_to_femur_x" value="0.1" />
+    <xacro:property name="coxa_to_femur_y" value="0.1" />
+    <xacro:macro name="coxa_inertial">
+      <inertial>
+        <mass value="0.00000000001" />
+        <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+      </inertial>
+    </xacro:macro>
 
+    <xacro:property name="femur_to_tibia_x" value="0.1" />
+    <xacro:property name="femur_to_tibia_y" value="0.1" />
+    <xacro:property name="femur_to_tibia_z" value="0.1" />
+    <xacro:macro name="femur_inertial">
+      <inertial>
+        <mass value="0.00000000001" />
+        <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+      </inertial>
+    </xacro:macro>
+
+    <xacro:property name="tibia_to_tip_x" value="0.1" />
+    <xacro:property name="tibia_to_tip_y" value="0.1" />
+    <xacro:property name="tibia_to_tip_z" value="0.1" />
+    <xacro:macro name="tibia_inertial">
+      <inertial>
+        <mass value="0.00000000001" />
+        <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+      </inertial>
+    </xacro:macro>
+
+
+    <!-- CONDITIONAL BLOCKS -->
+    <xacro:if value="${leg_prefix == 'front_left'}">
+      <xacro:property name="side" value="left" />
+      <xacro:property name="body_to_coxa_xyz" value="${robot_length/2.0} ${robot_width/2.0} 0.0" />
+      <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} ${coxa_to_femur_y} 0.0" />
+      <xacro:property name="femur_tibia_xyz" value="${femur_to_tibia_x} ${femur_to_tibia_y} ${femur_to_tibia_z}" />
+      <xacro:property name="tibia_tip_xyz" value="${tibia_to_tip_x} ${tibia_to_tip_y} ${tibia_to_tip_z}" />
+    </xacro:if>
+    <xacro:if value="${leg_prefix == 'front_right'}">
+      <xacro:property name="side" value="left" />
+      <xacro:property name="body_to_coxa_xyz" value="${robot_length/2.0} ${robot_width/2.0} 0.0" />
+      <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} ${coxa_to_femur_y} 0.0" />
+      <xacro:property name="femur_tibia_xyz" value="${femur_to_tibia_x} ${femur_to_tibia_y} ${femur_to_tibia_z}" />
+      <xacro:property name="tibia_tip_xyz" value="${tibia_to_tip_x} ${tibia_to_tip_y} ${tibia_to_tip_z}" />
+    </xacro:if>
+    <xacro:if value="${leg_prefix == 'rear_left'}">
+      <xacro:property name="side" value="left" />
+      <xacro:property name="body_to_coxa_xyz" value="${robot_length/2.0} ${robot_width/2.0} 0.0" />
+      <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} ${coxa_to_femur_y} 0.0" />
+      <xacro:property name="femur_tibia_xyz" value="${femur_to_tibia_x} ${femur_to_tibia_y} ${femur_to_tibia_z}" />
+      <xacro:property name="tibia_tip_xyz" value="${tibia_to_tip_x} ${tibia_to_tip_y} ${tibia_to_tip_z}" />
+    </xacro:if>
+    <xacro:if value="${leg_prefix == 'rear_right'}">
+      <xacro:property name="side" value="left" />
+      <xacro:property name="body_to_coxa_xyz" value="${robot_length/2.0} ${robot_width/2.0} 0.0" />
+      <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} ${coxa_to_femur_y} 0.0" />
+      <xacro:property name="femur_tibia_xyz" value="${femur_to_tibia_x} ${femur_to_tibia_y} ${femur_to_tibia_z}" />
+      <xacro:property name="tibia_tip_xyz" value="${tibia_to_tip_x} ${tibia_to_tip_y} ${tibia_to_tip_z}" />
+    </xacro:if>
+
+    
     <!-- LEG LINK -->
-    <xacro:macro name="leg_link" params="props">
-
-      <!-- CONDITIONAL BLOCKS -->
-      <xacro:if value="${leg_prefix == 'fr'}">
-        <xacro:property name="visual_mesh_props" value="${props['link']['mesh'][0]}" />
-        <xacro:property name="collision_mesh_props" value="${props['link']['collision'][0]}" />
-        <xacro:property name="length_props" value="${props['link']['length'][0]}" />
-        <xacro:property name="width_props" value="${props['link']['width'][0]}" />
-        <xacro:property name="origin_porps" value="${props['link']['origin'][0]}" />
-        <xacro:property name="mass_porps" value="${props['link']['mass'][0]}" />
-        <xacro:property name="inertia_porps" value="${props['link']['inertia'][0]}" />
-      </xacro:if>
-      <xacro:if value="${leg_prefix == 'fl'}">
-        <xacro:property name="visual_mesh_props" value="${props['link']['mesh'][1]}" />
-        <xacro:property name="collision_mesh_props" value="${props['link']['collision'][1]}" />
-        <xacro:property name="length_props" value="${props['link']['length'][1]}" />
-        <xacro:property name="width_props" value="${props['link']['width'][1]}" />
-        <xacro:property name="origin_porps" value="${props['link']['origin'][1]}" />
-        <xacro:property name="mass_porps" value="${props['link']['mass'][1]}" />
-        <xacro:property name="inertia_porps" value="${props['link']['inertia'][1]}" />
-      </xacro:if>
-      <xacro:if value="${leg_prefix == 'rr'}">
-        <xacro:property name="visual_mesh_props" value="${props['link']['mesh'][2]}" />
-        <xacro:property name="collision_mesh_props" value="${props['link']['collision'][2]}" />
-        <xacro:property name="length_props" value="${props['link']['length'][2]}" />
-        <xacro:property name="width_props" value="${props['link']['width'][2]}" />
-        <xacro:property name="origin_porps" value="${props['link']['origin'][2]}" />
-        <xacro:property name="mass_porps" value="${props['link']['mass'][2]}" />
-        <xacro:property name="inertia_porps" value="${props['link']['inertia'][2]}" />
-      </xacro:if>
-      <xacro:if value="${leg_prefix == 'rl'}">
-        <xacro:property name="visual_mesh_props" value="${props['link']['mesh'][3]}" />
-        <xacro:property name="collision_mesh_props" value="${props['link']['collision'][3]}" />
-        <xacro:property name="length_props" value="${props['link']['length'][3]}" />
-        <xacro:property name="width_props" value="${props['link']['width'][3]}" />
-        <xacro:property name="origin_porps" value="${props['link']['origin'][3]}" />
-        <xacro:property name="mass_porps" value="${props['link']['mass'][3]}" />
-        <xacro:property name="inertia_porps" value="${props['link']['inertia'][3]}" />
-      </xacro:if>
+    <xacro:macro name="leg_link" params="leg_prefix side link_name **inertial">     
 
       <!-- LINK DEFINITION -->
-      <link name="${leg_prefix}_${props['name']}">
+      <link name="${leg_prefix}_${link_name}">
         <visual>
           <geometry>
-            <xacro:property name="mesh" value="${visual_mesh_props}" />
-            <xacro:if value="${mesh == 'None'}">
-              <box size="${length_props}
-                         ${width_props}
-                         ${width_props}" />
-            </xacro:if>
-
-            <xacro:unless value="${mesh == 'None'}">
-              <xacro:if value="${use_ros_path}">
-                <mesh filename="$(find balltze_description)/meshes/${mesh}" scale="1 1 1" />
-              </xacro:if>
-              <xacro:unless value="${use_ros_path}">
-                <mesh filename="$(cwd)/meshes/${mesh}" scale="1 1 1" />
-              </xacro:unless>
-            </xacro:unless>
+            <mesh filename="$(find balltze_description)/meshes/${side}_${link_name}.stl" scale="1.0 1.0 1.0" />
           </geometry>
-          
-          <origin xyz="${origin_porps['x']} ${origin_porps['y']} ${origin_porps['z']}"
-                  rpy="${pi/2} 0 0" />
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
         </visual>
 
         <collision>
-          <xacro:property name="mesh" value="${collision_mesh_props}" />
-          <xacro:if value="${mesh == 'None'}">
-            <geometry>
-              <sphere radius="${width_props/2}"/>
-            </geometry>
-            <origin xyz="${length_props - width_props/2} 0 0"
-                  rpy="0 0 0" />
-          </xacro:if>
-          <xacro:unless value="${mesh == 'None'}">
-            <geometry>
-                <xacro:if value="${use_ros_path}">
-                  <mesh filename="$(find balltze_description)/meshes/${mesh}" scale="1 1 1" />
-                </xacro:if>
-                <xacro:unless value="${use_ros_path}">
-                  <mesh filename="$(cwd)/meshes/${mesh}" scale="1 1 1" />
-                </xacro:unless>
-            </geometry>
-            <origin xyz="${origin_porps['x']} ${origin_porps['y']} ${origin_porps['z']}"
-                    rpy="0 0 0" />
-          </xacro:unless>
+          <geometry>
+            <mesh filename="$(find balltze_description)/meshes/${side}_${link_name}_colision.stl" scale="1.0 1.0 1.0" />
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
         </collision>
 
         <inertial>
-          <mass value="${mass_porps}" />
-          <inertia ixx="${inertia_porps['ixx']}"
-                   ixy="${inertia_porps['ixy']}"
-                   ixz="${inertia_porps['ixz']}"
-                   iyy="${inertia_porps['iyy']}"
-                   iyz="${inertia_porps['iyz']}"
-                   izz="${inertia_porps['izz']}" />
+          <xacro:insert_block name="inertial" />
         </inertial>
-
-        <contact>
-          <friction_anchor/>
-          <stiffness value="30000.0"/>
-          <damping value="1000.0"/>
-          <spinning_friction value="0.3"/>
-          <lateral_friction value="3.0"/>
-        </contact>
       </link>
     </xacro:macro>
 
 
-
     <!-- LEG JOINT -->
-    <xacro:macro name="leg_joint" params="props parent_name axis rotation">
-
-      <!-- CONDITIONAL BLOCKS -->
-      <xacro:property name="velocity_props" value="${props['joint']['velocity']}" />
-      <xacro:property name="effort_props" value="${props['joint']['effort']}" />
-      <xacro:if value="${leg_prefix == 'fr'}">
-        <xacro:property name="origin_porps" value="${props['joint']['origin'][0]}" />
-        <xacro:property name="lower_limit_props" value="${props['joint']['limit']['lower'][0]}" />
-        <xacro:property name="upper_limit_props" value="${props['joint']['limit']['upper'][0]}" />
-        <xacro:property name="damping_porps" value="${props['joint']['damping'][0]}" />
-        <xacro:property name="friction_porps" value="${props['joint']['friction'][0]}" />
-      </xacro:if>
-      <xacro:if value="${leg_prefix == 'fl'}">
-        <xacro:property name="origin_porps" value="${props['joint']['origin'][1]}" />
-        <xacro:property name="lower_limit_props" value="${props['joint']['limit']['lower'][1]}" />
-        <xacro:property name="upper_limit_props" value="${props['joint']['limit']['upper'][1]}" />
-        <xacro:property name="damping_porps" value="${props['joint']['damping'][1]}" />
-        <xacro:property name="friction_porps" value="${props['joint']['friction'][1]}" />
-      </xacro:if>
-      <xacro:if value="${leg_prefix == 'rr'}">
-        <xacro:property name="origin_porps" value="${props['joint']['origin'][2]}" />
-        <xacro:property name="lower_limit_props" value="${props['joint']['limit']['lower'][2]}" />
-        <xacro:property name="upper_limit_props" value="${props['joint']['limit']['upper'][2]}" />
-        <xacro:property name="damping_porps" value="${props['joint']['damping'][2]}" />
-        <xacro:property name="friction_porps" value="${props['joint']['friction'][2]}" />
-      </xacro:if>
-      <xacro:if value="${leg_prefix == 'rl'}">
-        <xacro:property name="origin_porps" value="${props['joint']['origin'][3]}" />
-        <xacro:property name="lower_limit_props" value="${props['joint']['limit']['lower'][3]}" />
-        <xacro:property name="upper_limit_props" value="${props['joint']['limit']['upper'][3]}" />
-        <xacro:property name="damping_porps" value="${props['joint']['damping'][3]}" />
-        <xacro:property name="friction_porps" value="${props['joint']['friction'][3]}" />
-      </xacro:if>
-
+    <xacro:macro name="leg_joint" params="leg_prefix parent child xyz axis">
       <!-- JOINT DEFINITION -->
-      <joint name="${leg_prefix}_${parent_name}_to_${props['name']}_joint"
-             type="revolute">
-
-        <xacro:if value="${parent_name == 'base_link'}">
-          <parent link="${parent_name}" />
+      <joint name="${leg_prefix}_${parent}_to_${parent}_joint" type="revolute">
+        <xacro:if value="${parent == 'body_link'}">
+          <parent link="${parent}" />
         </xacro:if>
-        <xacro:unless value="${parent_name == 'base_link'}">
-          <parent link="${leg_prefix}_${parent_name}" />
+        <xacro:unless value="${parent == 'body_link'}">
+          <parent link="${leg_prefix}_${parent}" />
         </xacro:unless>
-        <origin xyz="${origin_porps['x']} ${origin_porps['y']} ${origin_porps['z']}"
-                rpy="${rotation}" />
-
-        <child link="${leg_prefix}_${props['name']}" />
+        <child link="${leg_prefix}_${parent}" />
+        
+        <origin xyz="${xyz}" rpy="0.0 0.0 0.0" />
         <axis xyz="${axis}" />
 
-        <limit effort="${effort_props}"
-               lower="${lower_limit_props}"
-               upper="${upper_limit_props}"
-               velocity="${velocity_props}" />
-
-        <dynamics damping="${damping_porps}"
-                  friction="${friction_porps}"/>
-
+        <limit effort="1.5" />
       </joint>
-
-
-
     </xacro:macro>
 
     <!-- DEFINE LINKS -->
-    <xacro:leg_link props="${robot_props['coxa']}" />
-    <xacro:leg_link props="${robot_props['femur']}" />
-    <xacro:leg_link props="${robot_props['tibia']}" />
+    <xacro:leg_link leg_prefix="${leg_prefix}" side="${side}" link_name="coxa_link">
+      <xacro:coxa_inertial/>
+    </xacro:leg_link>
+
+    <xacro:leg_link leg_prefix="${leg_prefix}" side="${side}" link_name="femur_link">
+      <xacro:femur_inertial/>
+    </xacro:leg_link>
+
+    <xacro:leg_link leg_prefix="${leg_prefix}" side="${side}" link_name="tibia_link">
+      <xacro:tibia_inertial/>
+    </xacro:leg_link>
+
+    <link name="${leg_prefix}_tip_link"></link>
+
 
     <!-- DEFINE JOINTS -->
-    <xacro:leg_joint props="${robot_props['coxa']}"
-                     parent_name="base_link"
-                     axis="1 0 0"
-                     rotation="0 0 0" />
+    <xacro:leg_joint
+      leg_prefix="${leg_prefix}"
+      parent="body_link"
+      child="coxa_link"
+      xyz="${body_to_coxa_xyz}"
+      axis="1 0 0"
+    />
 
-    <xacro:leg_joint props="${robot_props['femur']}"
-                     parent_name="coxa"
-                     axis="0 -1 0"
-                     rotation="0 ${pi/2} 0" />
+    <xacro:leg_joint
+      leg_prefix="${leg_prefix}"
+      parent="coxa_link"
+      child="femur_link"
+      xyz="${coxa_to_femur_xyz}"
+      axis="0 1 0"
+    />
 
-    <xacro:leg_joint props="${robot_props['tibia']}"
-                     parent_name="femur"
-                     axis="0 -1 0"
-                     rotation="0 0 0" />
+    <xacro:leg_joint
+      leg_prefix="${leg_prefix}"
+      parent="femur_link"
+      child="tibia_link"
+      xyz="${femur_tibia_xyz}"
+      axis="0 1 0"
+    />
+
+    <joint name="${leg_prefix}_tibia_link_to_tip_link_joint" type="fixed">
+      <parent link="${leg_prefix}_tibia_link" />
+      <child link="${leg_prefix}_tip_link" />
+      <origin xyz="${tibia_tip_xyz}" rpy="0.0 0.0 0.0" />
+    </joint>
 
   </xacro:macro>
 

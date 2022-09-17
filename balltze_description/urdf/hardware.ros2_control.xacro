@@ -1,0 +1,41 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+    <xacro:macro name="ros2_control_system">
+      
+      <xacro:macro name="ros2_control_joint" params="joint_name motor_id">
+        <joint name="${joint_name}">
+          <command_interface name="position" />
+          <command_interface name="velocity" />
+          <command_interface name="effort" />
+
+          <state_interface name="position" />
+          <state_interface name="velocity" />
+          <state_interface name="effort" />
+
+          <id>${motor_id}</id>
+        </joint>
+      </xacro:macro>
+
+      <xacro:macro name="leg_joints" params="leg_prefix coxa_motor_id">
+        <xacro:ros2_control_joint joint_name="${leg_prefix}_body_link_to_coxa_link_joint" motor_id="${coxa_motor_id}"/>
+        <xacro:ros2_control_joint joint_name="${leg_prefix}_coxa_link_to_femur_link_joint" motor_id="${coxa_motor_id+1}"/>
+        <xacro:ros2_control_joint joint_name="${leg_prefix}_femur_link_to_tibia_link_joint" motor_id="${coxa_motor_id+2}"/>
+      </xacro:macro>
+
+      <ros2_control name="DynamixelSystem" type="system">
+        <hardware>
+          <plugin>dynamixel_hardware_system/DynamixelAX12ASystem</plugin>
+        </hardware>
+
+        <serial_port>/dev/ttyUSB1</serial_port>
+        <baudrate>1000000</baudrate>
+        <return_delay>50</return_delay>
+
+        <xacro:leg_joints leg_prefix="front_left"  coxa_motor_id="0" />
+        <xacro:leg_joints leg_prefix="front_right" coxa_motor_id="3" />
+        <xacro:leg_joints leg_prefix="rear_left"   coxa_motor_id="6" />
+        <xacro:leg_joints leg_prefix="rear_right"  coxa_motor_id="9" />
+      
+      </ros2_control>
+    </xacro:macro>
+</robot>
