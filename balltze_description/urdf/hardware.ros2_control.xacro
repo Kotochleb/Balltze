@@ -12,7 +12,7 @@
           <state_interface name="velocity" />
           <state_interface name="effort" />
 
-          <id>${motor_id}</id>
+          <param name="id">${motor_id}</param>
         </joint>
       </xacro:macro>
 
@@ -24,12 +24,12 @@
 
       <ros2_control name="DynamixelSystem" type="system">
         <hardware>
-          <plugin>dynamixel_hardware_system/DynamixelAX12ASystem</plugin>
+          <plugin>balltze_dynamixel_system/BalltzeDynamixelSystem</plugin>
         </hardware>
 
-        <serial_port>/dev/ttyUSB1</serial_port>
-        <baudrate>1000000</baudrate>
-        <return_delay>50</return_delay>
+        <param name="serial_port">/dev/ttyUSB1</param>
+        <param name="baudrate">1000000</param>
+        <param name="return_delay">50</param>
 
         <xacro:leg_joints leg_prefix="front_left"  coxa_motor_id="0" />
         <xacro:leg_joints leg_prefix="front_right" coxa_motor_id="3" />

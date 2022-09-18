@@ -1,4 +1,4 @@
-#include "dynamixel_hardware_system/ax_12_a_motor.hpp"
+#include "balltze_hardware/ax_12_a_motor.hpp"
 
 #include <memory>
 #include <vector>

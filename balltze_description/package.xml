@@ -25,6 +25,7 @@
   <exec_depend condition="$BALLTZE_BUILD_TYPE == 'hardware'">dynamixel_hardware_system</exec_depend>
   <exec_depend condition="$BALLTZE_BUILD_TYPE == ''">dynamixel_hardware_system</exec_depend>
   <exec_depend condition="$BALLTZE_BUILD_TYPE == 'simulation'">ign_ros2_control</exec_depend>
+  <exec_depend condition="$BALLTZE_BUILD_TYPE == 'simulation'">joint_state_publisher_gui</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

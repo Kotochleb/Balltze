@@ -4,8 +4,9 @@
   <!-- LEG MACRO -->
   <xacro:macro name="leg" params="leg_prefix robot_width robot_length">
 
-    <xacro:property name="coxa_to_femur_x" value="0.1" />
-    <xacro:property name="coxa_to_femur_y" value="0.1" />
+    <xacro:property name="coxa_to_femur_x" value="0.0" />
+    <xacro:property name="coxa_to_femur_y" value="0.06" />
+    <xacro:property name="coxa_to_femur_z" value="0.0" />
     <xacro:macro name="coxa_inertial">
       <inertial>
         <mass value="0.00000000001" />
@@ -13,9 +14,9 @@
       </inertial>
     </xacro:macro>
 
-    <xacro:property name="femur_to_tibia_x" value="0.1" />
-    <xacro:property name="femur_to_tibia_y" value="0.1" />
-    <xacro:property name="femur_to_tibia_z" value="0.1" />
+    <xacro:property name="femur_to_tibia_x" value="0.0" />
+    <xacro:property name="femur_to_tibia_y" value="0.0" />
+    <xacro:property name="femur_to_tibia_z" value="-0.11" />
     <xacro:macro name="femur_inertial">
       <inertial>
         <mass value="0.00000000001" />
@@ -23,9 +24,9 @@
       </inertial>
     </xacro:macro>
 
-    <xacro:property name="tibia_to_tip_x" value="0.1" />
-    <xacro:property name="tibia_to_tip_y" value="0.1" />
-    <xacro:property name="tibia_to_tip_z" value="0.1" />
+    <xacro:property name="tibia_to_tip_x" value="0.15" />
+    <xacro:property name="tibia_to_tip_y" value="0.0" />
+    <xacro:property name="tibia_to_tip_z" value="0.0" />
     <xacro:macro name="tibia_inertial">
       <inertial>
         <mass value="0.00000000001" />
@@ -33,35 +34,38 @@
       </inertial>
     </xacro:macro>
 
+    <xacro:property name="motor_range"   value="${300.0 / 360.0 * (2.0 * pi)}" />
+    <xacro:property name="motor_max_vel" value="${114.0 * (2.0 * pi / 60.0)}" />
+    <xacro:property name="motor_max_eff" value="1.5" />
 
     <!-- CONDITIONAL BLOCKS -->
     <xacro:if value="${leg_prefix == 'front_left'}">
       <xacro:property name="side" value="left" />
       <xacro:property name="body_to_coxa_xyz" value="${robot_length/2.0} ${robot_width/2.0} 0.0" />
-      <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} ${coxa_to_femur_y} 0.0" />
+      <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} ${coxa_to_femur_y} ${coxa_to_femur_z}" />
       <xacro:property name="femur_tibia_xyz" value="${femur_to_tibia_x} ${femur_to_tibia_y} ${femur_to_tibia_z}" />
       <xacro:property name="tibia_tip_xyz" value="${tibia_to_tip_x} ${tibia_to_tip_y} ${tibia_to_tip_z}" />
     </xacro:if>
     <xacro:if value="${leg_prefix == 'front_right'}">
       <xacro:property name="side" value="left" />
-      <xacro:property name="body_to_coxa_xyz" value="${robot_length/2.0} ${robot_width/2.0} 0.0" />
-      <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} ${coxa_to_femur_y} 0.0" />
-      <xacro:property name="femur_tibia_xyz" value="${femur_to_tibia_x} ${femur_to_tibia_y} ${femur_to_tibia_z}" />
-      <xacro:property name="tibia_tip_xyz" value="${tibia_to_tip_x} ${tibia_to_tip_y} ${tibia_to_tip_z}" />
+      <xacro:property name="body_to_coxa_xyz" value="${robot_length/2.0} -${robot_width/2.0} 0.0" />
+      <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} -${coxa_to_femur_y} 0.0" />
+      <xacro:property name="femur_tibia_xyz" value="${femur_to_tibia_x} -${femur_to_tibia_y} ${femur_to_tibia_z}" />
+      <xacro:property name="tibia_tip_xyz" value="${tibia_to_tip_x} -${tibia_to_tip_y} ${tibia_to_tip_z}" />
     </xacro:if>
     <xacro:if value="${leg_prefix == 'rear_left'}">
       <xacro:property name="side" value="left" />
-      <xacro:property name="body_to_coxa_xyz" value="${robot_length/2.0} ${robot_width/2.0} 0.0" />
+      <xacro:property name="body_to_coxa_xyz" value="-${robot_length/2.0} ${robot_width/2.0} 0.0" />
       <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} ${coxa_to_femur_y} 0.0" />
       <xacro:property name="femur_tibia_xyz" value="${femur_to_tibia_x} ${femur_to_tibia_y} ${femur_to_tibia_z}" />
       <xacro:property name="tibia_tip_xyz" value="${tibia_to_tip_x} ${tibia_to_tip_y} ${tibia_to_tip_z}" />
     </xacro:if>
     <xacro:if value="${leg_prefix == 'rear_right'}">
       <xacro:property name="side" value="left" />
-      <xacro:property name="body_to_coxa_xyz" value="${robot_length/2.0} ${robot_width/2.0} 0.0" />
-      <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} ${coxa_to_femur_y} 0.0" />
-      <xacro:property name="femur_tibia_xyz" value="${femur_to_tibia_x} ${femur_to_tibia_y} ${femur_to_tibia_z}" />
-      <xacro:property name="tibia_tip_xyz" value="${tibia_to_tip_x} ${tibia_to_tip_y} ${tibia_to_tip_z}" />
+      <xacro:property name="body_to_coxa_xyz" value="-${robot_length/2.0} -${robot_width/2.0} 0.0" />
+      <xacro:property name="coxa_to_femur_xyz" value="${coxa_to_femur_x} -${coxa_to_femur_y} 0.0" />
+      <xacro:property name="femur_tibia_xyz" value="${femur_to_tibia_x} -${femur_to_tibia_y} ${femur_to_tibia_z}" />
+      <xacro:property name="tibia_tip_xyz" value="${tibia_to_tip_x} -${tibia_to_tip_y} ${tibia_to_tip_z}" />
     </xacro:if>
 
     
@@ -72,14 +76,14 @@
       <link name="${leg_prefix}_${link_name}">
         <visual>
           <geometry>
-            <mesh filename="$(find balltze_description)/meshes/${side}_${link_name}.stl" scale="1.0 1.0 1.0" />
+            <mesh filename="file://$(find balltze_description)/meshes/${side}_${link_name}.stl" scale="0.1 0.1 0.1" />
           </geometry>
           <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
         </visual>
 
         <collision>
           <geometry>
-            <mesh filename="$(find balltze_description)/meshes/${side}_${link_name}_colision.stl" scale="1.0 1.0 1.0" />
+            <mesh filename="file://$(find balltze_description)/meshes/${side}_${link_name}_collision.stl" scale="0.1 0.1 0.1" />
           </geometry>
           <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
         </collision>
@@ -101,12 +105,15 @@
         <xacro:unless value="${parent == 'body_link'}">
           <parent link="${leg_prefix}_${parent}" />
         </xacro:unless>
-        <child link="${leg_prefix}_${parent}" />
+        <child link="${leg_prefix}_${child}" />
         
         <origin xyz="${xyz}" rpy="0.0 0.0 0.0" />
         <axis xyz="${axis}" />
 
-        <limit effort="1.5" />
+        <limit effort="${motor_max_eff}"
+               lower="${motor_range/2.0}"
+               upper="${-motor_range/2.0}"
+               velocity="${motor_max_vel}" />
       </joint>
     </xacro:macro>
 
@@ -123,7 +130,21 @@
       <xacro:tibia_inertial/>
     </xacro:leg_link>
 
-    <link name="${leg_prefix}_tip_link"></link>
+    <link name="${leg_prefix}_tip_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find balltze_description)/meshes/${side}_coxa_link.stl" scale="0.1 0.1 0.1" />
+        </geometry>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      </visual>
+
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find balltze_description)/meshes/${side}_coxa_link_collision.stl" scale="0.1 0.1 0.1" />
+        </geometry>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      </collision>
+    </link>
 
 
     <!-- DEFINE JOINTS -->

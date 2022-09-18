@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(balltze_gazebo)
+project(balltze_simulation)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -10,9 +10,9 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
-find_package(gazebo REQUIRED)
+find_package(ignition-gazebo6 REQUIRED)
 
-install(DIRECTORY launch worlds
+install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
 )
 

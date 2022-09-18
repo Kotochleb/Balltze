@@ -8,14 +8,14 @@
     <link name="body_link">
       <visual>
         <geometry>
-          <mesh filename="$(find balltze_description)/meshes/body_link.stl" scale="1.0 1.0 1.0" />
+          <mesh filename="file://$(find balltze_description)/meshes/body_link.stl" scale="0.5 0.5 0.5" />
         </geometry>
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
       </visual>
 
       <collision>
         <geometry>
-          <mesh filename="$(find balltze_description)/meshes/body_link_colision.stl" scale="1.0 1.0 1.0" />
+          <mesh filename="file://$(find balltze_description)/meshes/body_link_collision.stl" scale="0.5 0.5 0.5" />
         </geometry>
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
       </collision>

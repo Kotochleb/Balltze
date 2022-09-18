@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>dynamixel_hardware_system</name>
+  <name>balltze_simulation</name>
   <version>0.0.0</version>
-  <description>Dynamixel AX12-A ros2_controll hardware controllers</description>
+  <description>Balltze Ignition-Gazebo simulation</description>
   <maintainer email="krzy.wojciecho@gmail.com">Krzysztof Wojciechowski</maintainer>
   <license>MIT</license>
 
@@ -21,16 +21,25 @@
   <depend>hardware_interface</depend>
   <depend>controller_manager</depend>
   <depend>pluginlib</depend>
-  <depend>dynamixel_sdk</depend>
   <depend>rclcpp</depend>
   <depend>rclcpp_lifecycle</depend>
+  <depend>ament_index_python</depend>
+  <depend>ign_ros2_control</depend>
+  <depend>imu_sensor_broadcaster</depend>
+  <depend>joint_state_broadcaster</depend>
+  <depend>joint_trajectory_controller</depend>
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+  <depend>ros2launch</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>ros_ign_gazebo</depend>
+  <depend>ros2controlcli</depend>
+  <depend>xacro</depend>
+  <depend>ignition-gazebo6</depend>
 
-  <test_depend>ament_lint_common</test_depend>
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_cmake_gtest</test_depend>
+  <depend>balltze_description</depend>
 
   <export>
     <build_type>ament_cmake</build_type>
-    <gazebo_ros2_control plugin="${prefix}/dynamixel_hardware_plugins.xml"/>
   </export>
 </package>

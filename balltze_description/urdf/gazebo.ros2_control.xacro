@@ -3,18 +3,22 @@
     <xacro:macro name="ros2_control_system">
 
       <xacro:macro name="ros2_control_joint" params="joint_name">
+        <xacro:property name="motor_range"   value="${300.0 / 360.0 * (2.0 * pi)}" />
+        <xacro:property name="motor_max_vel" value="${114.0 * (2.0 * pi / 60.0)}" />
+        <xacro:property name="motor_max_eff" value="1.5" />
+
         <joint name="${joint_name}">
           <command_interface name="position">
-            <param name="min">-5.23</param>
-            <param name="max">5.23</param>
+            <param name="min">-${motor_range/2.0}</param>
+            <param name="max">${motor_range/2.0}</param>
           </command_interface>
           <command_interface name="velocity">
-            <param name="min">-11.932</param>
-            <param name="max">11.932</param>
+            <param name="min">-${motor_max_vel}</param>
+            <param name="max">${motor_max_vel}</param>
           </command_interface>
           <command_interface name="effort">
-            <param name="min">-1.50</param>
-            <param name="max">1.50</param>
+            <param name="min">-${motor_max_eff}</param>
+            <param name="max">${motor_max_eff}</param>
           </command_interface>
 
           <state_interface name="position">
@@ -45,8 +49,6 @@
 
       <gazebo>
         <plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin">
-          <robot_param>robot_description</robot_param>
-          <robot_param_node>robot_state_publisher</robot_param_node>
           <parameters>$(find balltze_description)/config/controllers.yaml</parameters>
         </plugin>
       </gazebo>

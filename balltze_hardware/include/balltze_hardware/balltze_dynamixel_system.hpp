@@ -1,5 +1,5 @@
-#ifndef DYNAMIXEL_AX12A_SYSTEM_
-#define DYNAMIXEL_AX12A_SYSTEM_
+#ifndef BALLTZE_DYNAMIXEL_SYSTEM_
+#define BALLTZE_DYNAMIXEL_SYSTEM_
 
 #include <map>
 #include <memory>
@@ -16,52 +16,52 @@
 
 #include "dynamixel_sdk/dynamixel_sdk.h"
 
-#include "dynamixel_hardware_system/ax_12_a_motor.hpp"
-#include "dynamixel_hardware_system/visibility_control.hpp"
+#include "balltze_hardware/ax_12_a_motor.hpp"
+#include "balltze_hardware/visibility_control.hpp"
 
 
-namespace dynamixel_ax12a_system {
+namespace balltze_dynamixel_system {
 
 using return_type = hardware_interface::return_type;
 using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 using StateInterface = hardware_interface::StateInterface;
 using CommandInterface = hardware_interface::CommandInterface;
 
-class DynamixelAX12ASystem : public hardware_interface::SystemInterface {
+class BalltzeDynamixelSystem : public hardware_interface::SystemInterface {
 public:
-  RCLCPP_SHARED_PTR_DEFINITIONS(DynamixelAX12ASystem)
+  RCLCPP_SHARED_PTR_DEFINITIONS(BalltzeDynamixelSystem)
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   CallbackReturn on_init(const hardware_interface::HardwareInfo& hardware_info) override;
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   std::vector<StateInterface> export_state_interfaces() override;
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   std::vector<CommandInterface> export_command_interfaces() override;
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   CallbackReturn on_configure(const rclcpp_lifecycle::State&) override;
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   CallbackReturn on_activate(const rclcpp_lifecycle::State&) override;
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   CallbackReturn on_deactivate(const rclcpp_lifecycle::State&) override;
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   CallbackReturn on_cleanup(const rclcpp_lifecycle::State&);
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   CallbackReturn on_shutdown(const rclcpp_lifecycle::State&);
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   CallbackReturn on_error(const rclcpp_lifecycle::State&);
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   hardware_interface::return_type read(const rclcpp::Time&, const rclcpp::Duration&) override;
 
-  DYNAMIXEL_AX12A_SYSTEM_PUBLIC
+  BALLTZE_DYNAMIXEL_SYSTEM_PUBLIC
   hardware_interface::return_type write(const rclcpp::Time&, const rclcpp::Duration&) override;
 
 
@@ -106,4 +106,4 @@ private:
 
 
 
-#endif //DYNAMIXEL_AX12A_SYSTEM_
+#endif //BALLTZE_DYNAMIXEL_SYSTEM_
