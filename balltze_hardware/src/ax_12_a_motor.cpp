@@ -57,7 +57,7 @@ std::shared_ptr<ErrorReport> AX12AMotor::get_motor_error_report() {
   auto error_report = std::make_shared<ErrorReport>();
 
   if (error_code_) {
-    error_occured = true;
+    error_report->error_occured = true;
     if (error_code_ & ERROR_BIT_VOLTAGE_) {
       error_report->voltage = true;
     }

@@ -12,7 +12,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ignition-gazebo6 REQUIRED)
 
-install(DIRECTORY launch
+install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}
 )
 

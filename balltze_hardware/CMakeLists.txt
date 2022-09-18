@@ -16,6 +16,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(controller_manager REQUIRED)
+find_package(dynamixel_sdk REQUIRED)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
   hardware_interface
@@ -28,26 +29,26 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
 
 include_directories(include)
 
-add_library(${PROJECT_NAME} SHARED
+add_library(balltze_hardware_plugins SHARED
+  src/ax_12_a_motor.cpp
   src/balltze_dynamixel_system.cpp
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE
+target_include_directories(balltze_hardware_plugins PRIVATE
   include
 )
 
-ament_target_dependencies(${PROJECT_NAME}
+ament_target_dependencies(balltze_hardware_plugins
   ${THIS_PACKAGE_INCLUDE_DEPENDS}
 )
 
 # prevent pluginlib from using boost
-target_compile_definitions(${PROJECT_NAME} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
+target_compile_definitions(balltze_hardware_plugins PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
 pluginlib_export_plugin_description_file(hardware_interface balltze_hardware_plugins.xml)
 
-install(TARGETS ${PROJECT_NAME}
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
+install(
+  TARGETS balltze_hardware_plugins
+  DESTINATION lib
 )
 
 install(DIRECTORY include/
@@ -55,19 +56,27 @@ install(DIRECTORY include/
 )
 
 install(FILES balltze_hardware_plugins.xml
-  DESTINATION share/${PROJECT_NAME}
+  DESTINATION share/balltze_hardware_plugins
 )
 
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
 ament_export_include_directories(include)
-ament_export_libraries(${PROJECT_NAME})
+ament_export_libraries(balltze_hardware_plugins)
 
 ament_export_include_directories(
   include
 )
 
 ament_export_libraries(
-  ${PROJECT_NAME}
+  balltze_hardware_plugins
+)
+
+ament_export_dependencies(
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  ${THIS_PACKAGE_INCLUDE_DEPENDS}
 )
 
 ament_package()

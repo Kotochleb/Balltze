@@ -4,7 +4,7 @@
         type="balltze_dynamixel_system::BalltzeDynamixelSystem"
         base_class_type="hardware_interface::SystemInterface">
         <description>
-            Balltze Dynamixel hardware
+            Balltze Dynamixel hardware system
         </description>
     </class>
 </library>

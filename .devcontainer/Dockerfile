@@ -2,6 +2,8 @@ FROM osrf/ros:humble-desktop
 
 SHELL ["/bin/bash", "-c"]
 
+ENV RCUTILS_COLORIZED_OUTPUT=1
+
 RUN apt update && \
     apt install -y \
         build-essential \

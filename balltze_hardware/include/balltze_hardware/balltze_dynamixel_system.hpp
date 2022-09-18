@@ -104,6 +104,4 @@ private:
 };
 }
 
-
-
 #endif //BALLTZE_DYNAMIXEL_SYSTEM_

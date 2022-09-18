@@ -20,7 +20,6 @@
 #include "dynamixel_sdk/dynamixel_sdk.h"
 
 using namespace std::chrono_literals;
-
 namespace balltze_dynamixel_system {
 
 CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::HardwareInfo& hardware_info) {
@@ -29,14 +28,14 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
   }
 
   if (info_.hardware_parameters.size() != hardware_parameters_.size()) {
-    RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "System %s has %zu parameters. %zu expected.",
+    RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "System '%s' has %zu parameters. %zu expected.",
                 info_.name.c_str(), info_.hardware_parameters.size(), hardware_parameters_.size());
     return CallbackReturn::ERROR;
   }
 
   for (auto & parameter : hardware_parameters_) {
     if (info_.hardware_parameters.find(parameter) == info_.hardware_parameters.end()) {
-     RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "System '%s' does not have '%s' parameter specified.",
+     RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "System '%s' does not have '%s' parameter specified.",
                   info_.name.c_str(), parameter.c_str());
     return CallbackReturn::ERROR;
     }
@@ -45,41 +44,41 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
 
   for (const hardware_interface::ComponentInfo& joint : info_.joints) {
     if (joint.command_interfaces.size() != command_interfaces_.size()) {
-      RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' has %zu command interfaces found. 3 expected.",
+      RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' has %zu command interfaces found. 3 expected.",
                    joint.name.c_str(), joint.command_interfaces.size());
       return CallbackReturn::ERROR;
     }
 
     for (std::size_t i = 0; i < joint.command_interfaces.size(); i++) {
       if (joint.command_interfaces[i].name != command_interfaces_[i]) {
-        RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' have %s command interfaces found. '%s' expected.",
+        RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' have '%s' command interfaces found. '%s' expected.",
                     joint.name.c_str(), joint.command_interfaces[i].name.c_str(), command_interfaces_[i].c_str());
         return CallbackReturn::ERROR;
       }
     }
 
     if (joint.state_interfaces.size() != state_interfaces_.size()) {
-      RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' has %zu state interface. 3 expected.",
+      RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' has %zu state interface. 3 expected.",
                    joint.name.c_str(), joint.state_interfaces.size());
       return CallbackReturn::ERROR;
     }
 
     for (std::size_t i = 0; i < joint.state_interfaces.size(); i++) {
-      if (joint.state_interfaces[0].name != state_interfaces_[i]) {
-        RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' have '%s' state interface. '%s' expected.",
-                    joint.name.c_str(), joint.state_interfaces[0].name.c_str(), state_interfaces_[i].c_str());
+      if (joint.state_interfaces[i].name != state_interfaces_[i]) {
+        RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' have '%s' state interface. '%s' expected.",
+                    joint.name.c_str(), joint.state_interfaces[i].name.c_str(), state_interfaces_[i].c_str());
         return CallbackReturn::ERROR;
       }
     }
 
     if (joint.parameters.size() != 1) {
-      RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' has %zu parameters. 1 expected.",
+      RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' has %zu parameters. 1 expected.",
                    joint.name.c_str(), joint.parameters.size());
       return CallbackReturn::ERROR;
     }
 
     if (joint.parameters.find("id") == joint.parameters.end()) {
-      RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' does not have 'id' parameter specified.",
+      RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' does not have 'id' parameter specified.",
                    joint.name.c_str());
       return CallbackReturn::ERROR;
     }
@@ -89,8 +88,8 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
   serial_port_ = info_.hardware_parameters.at("serial_port");
   std::regex expr ("/dev/[a-zA-Z0-9]*$");
   if (!std::regex_match(serial_port_, expr)) {
-    RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"),
-      "Device name: (%s) does not match convention '/dev/<name>'.", serial_port_.c_str());
+    RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"),
+      "Device name: '%s' does not match convention '/dev/<name>'.", serial_port_.c_str());
     return CallbackReturn::ERROR;
   }
 
@@ -104,7 +103,7 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
     baudrate_ = std::stoi(baudrate_str);
   }
   catch(std::invalid_argument const& ex) {
-    RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "'baudrate' parameter for system '%s' is incorrect type.",
+    RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "'baudrate' parameter for system '%s' is incorrect type.",
                   info_.name.c_str());
     return CallbackReturn::ERROR;
   }
@@ -115,7 +114,7 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
     return_delay_ = std::stoi(return_delay_str);
   }
   catch(std::invalid_argument const& ex) {
-    RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "'return_delay' parameter for system '%s' is incorrect type.",
+    RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "'return_delay' parameter for system '%s' is incorrect type.",
                   info_.name.c_str());
     return CallbackReturn::ERROR;
   }
@@ -128,7 +127,7 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
       motors_.insert({joint.name, std::make_unique<ax_12_a_motor::AX12AMotor>(id, portHandler_, packetHandler_)});
     }
     catch(std::invalid_argument const& ex) {
-      RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' parameter: 'id' is invalid type.",
+      RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' parameter: 'id' is invalid type.",
                    joint.name.c_str());
       return CallbackReturn::ERROR;
     }
@@ -172,7 +171,7 @@ CallbackReturn BalltzeDynamixelSystem::on_configure(const rclcpp_lifecycle::Stat
   
   // Check if serial port exists
   if (!std::ifstream(serial_port_.c_str()).good()) {
-    RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "No device: %s.", serial_port_.c_str());
+    RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "No device: %s.", serial_port_.c_str());
     return CallbackReturn::ERROR;
   }
 
@@ -185,7 +184,7 @@ CallbackReturn BalltzeDynamixelSystem::on_configure(const rclcpp_lifecycle::Stat
   RCLCPP_DEBUG(rclcpp::get_logger("BalltzeDynamixelSystem"), "Changing FT232 latency timer at path '%s'.", latency_file_path.c_str());
 
   if (!std::ifstream(latency_file_path.c_str()).good()) {
-    RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "No file: %s. Failed to change FT232 latency timer.", latency_file_path.c_str());
+    RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "No file: %s. Failed to change FT232 latency timer.", latency_file_path.c_str());
     return CallbackReturn::ERROR;
   }
 
@@ -197,23 +196,23 @@ CallbackReturn BalltzeDynamixelSystem::on_configure(const rclcpp_lifecycle::Stat
     RCLCPP_DEBUG(rclcpp::get_logger("BalltzeDynamixelSystem"), "Succeeded to change FT232 latency timer at device '%s'.", serial_port_.c_str());
   }
   catch (const std::exception& e) {
-    RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Failed to change FT232 latency timer at device '%s'.", serial_port_.c_str());
+    RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Failed to change FT232 latency timer at device '%s'.", serial_port_.c_str());
     return CallbackReturn::ERROR;
   }
   latency_timer_file.close();
 
   if (!portHandler_->openPort()) {
-    RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Failed to open serial port at device '%s'.", serial_port_.c_str());
+    RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Failed to open serial port at device '%s'.", serial_port_.c_str());
     return CallbackReturn::ERROR;
   } else {
     RCLCPP_DEBUG(rclcpp::get_logger("BalltzeDynamixelSystem"), "Succeeded to open serial port at device '%s'.", serial_port_.c_str());
   }
 
   if (!portHandler_->setBaudRate(baudrate_)) {
-    RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Failed to set the baudrate_!");
+    RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Failed to set the baudrate_!");
     return CallbackReturn::ERROR;
   } else {
-    RCLCPP_DEBUG(rclcpp::get_logger("BalltzeDynamixelSystem"), "Succeeded to set the baudrate_.");
+    RCLCPP_DEBUG(rclcpp::get_logger("BalltzeDynamixelSystem"), "Succeeded to set the baudrate.");
   }
   
   return CallbackReturn::SUCCESS;
@@ -228,7 +227,7 @@ CallbackReturn BalltzeDynamixelSystem::on_activate(const rclcpp_lifecycle::State
       RCLCPP_DEBUG(rclcpp::get_logger("BalltzeDynamixelSystem"), "Motor at joint '%s' successfully pinged.", joint.name.c_str());
     }
     else {
-      RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Failed to ping motor at joint '%s'!", joint.name.c_str());
+      RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Failed to ping motor at joint '%s'!", joint.name.c_str());
       return CallbackReturn::ERROR;
     }
   }
@@ -250,12 +249,17 @@ CallbackReturn BalltzeDynamixelSystem::on_activate(const rclcpp_lifecycle::State
       RCLCPP_DEBUG(rclcpp::get_logger("BalltzeDynamixelSystem"), "Motor at joint '%s' successfully pinged after reboot.", joint.name.c_str());
     }
     else {
-      RCLCPP_FATAL(rclcpp::get_logger("BalltzeDynamixelSystem"), "Failed to ping motor at joint '%s' after reboot!", joint.name.c_str());
+      RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Failed to ping motor at joint '%s' after reboot!", joint.name.c_str());
       return CallbackReturn::ERROR;
     }
   }
   RCLCPP_INFO(rclcpp::get_logger("BalltzeDynamixelSystem"), "Successfully rebooted motors.");
   motors_connected_ = true;
+
+  // Turn on LED to indicate motor start
+  for (auto & joint : info_.joints) {
+    motors_.at(joint.name)->set_led(true);
+  }
 
   // Set return delay to sepcyfied in perameter
   RCLCPP_INFO(rclcpp::get_logger("BalltzeDynamixelSystem"), "Setting return delay for motors...");
@@ -281,17 +285,12 @@ CallbackReturn BalltzeDynamixelSystem::on_activate(const rclcpp_lifecycle::State
   }
   RCLCPP_INFO(rclcpp::get_logger("BalltzeDynamixelSystem"), "Successfully enabled torque for all motors.");
 
-  // Blink LED 3 times to indicate correct setup
-  for (size_t i = 0; i < 3; i++) {
-    for (auto & joint : info_.joints) {
-      motors_.at(joint.name)->set_led(true);
-    }
+  // Wait to make LED visible
+  std::this_thread::sleep_for(1000ms);
 
-    std::this_thread::sleep_for(1000ms);
-
-    for (auto & joint : info_.joints) {
-      motors_.at(joint.name)->set_led(false);
-    }
+  // Turn off LED to indicate full initialisation
+  for (auto & joint : info_.joints) {
+    motors_.at(joint.name)->set_led(false);
   }
 
   return CallbackReturn::SUCCESS;

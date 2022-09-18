@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>balltze_hardware</name>
+  <name>balltze</name>
   <version>0.0.0</version>
-  <description>Dynamixel AX12-A ros2_controll hardware controllers</description>
+  <description>Balltze Ignition-Gazebo simulation</description>
   <maintainer email="krzy.wojciecho@gmail.com">Krzysztof Wojciechowski</maintainer>
   <license>MIT</license>
 
@@ -15,20 +15,11 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_common</test_depend>
-
-  <depend>hardware_interface</depend>
-  <depend>controller_manager</depend>
-  <depend>pluginlib</depend>
-  <depend>dynamixel_sdk</depend>
-  <depend>rclcpp</depend>
-  <depend>rclcpp_lifecycle</depend>
-  <exec_depend>ros2controlcli</exec_depend>
-
-  <test_depend>ament_lint_common</test_depend>
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_cmake_gtest</test_depend>
+  <exec_depend>balltze_bringup</exec_depend>
+  <exec_depend>balltze_description</exec_depend>
+  <exec_depend>balltze_hardware</exec_depend>
+  <exec_depend>balltze_msgs</exec_depend>
+  <exec_depend condition="$BALLTZE_BUILD_TYPE == 'simulation'">balltze_simulation</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

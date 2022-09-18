@@ -25,16 +25,16 @@
       <ros2_control name="DynamixelSystem" type="system">
         <hardware>
           <plugin>balltze_dynamixel_system/BalltzeDynamixelSystem</plugin>
+          <param name="serial_port">/dev/ttyUSB1</param>
+          <param name="baudrate">1000000</param>
+          <param name="return_delay">50</param>
         </hardware>
 
-        <param name="serial_port">/dev/ttyUSB1</param>
-        <param name="baudrate">1000000</param>
-        <param name="return_delay">50</param>
 
-        <xacro:leg_joints leg_prefix="front_left"  coxa_motor_id="0" />
-        <xacro:leg_joints leg_prefix="front_right" coxa_motor_id="3" />
+        <xacro:leg_joints leg_prefix="front_left"  coxa_motor_id="10" />
+        <!-- <xacro:leg_joints leg_prefix="front_right" coxa_motor_id="3" />
         <xacro:leg_joints leg_prefix="rear_left"   coxa_motor_id="6" />
-        <xacro:leg_joints leg_prefix="rear_right"  coxa_motor_id="9" />
+        <xacro:leg_joints leg_prefix="rear_right"  coxa_motor_id="9" /> -->
       
       </ros2_control>
     </xacro:macro>
