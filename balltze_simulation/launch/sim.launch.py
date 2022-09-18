@@ -16,6 +16,7 @@ from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.event_handlers import OnProcessExit
 
+import os
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default=True)
@@ -23,6 +24,7 @@ def generate_launch_description():
     balltze_description = get_package_share_directory('balltze_description')
     xacro_file = PathJoinSubstitution([balltze_description, 'urdf', 'balltze.urdf.xacro'])
     rviz_config = PathJoinSubstitution([balltze_description, 'rviz', 'model_preveiw.rviz'])
+    pkg_ros_ign_gazebo = get_package_share_directory('ros_ign_gazebo')
 
     robot_description = {
         'robot_description' : Command([
@@ -45,28 +47,6 @@ def generate_launch_description():
         output='screen',
         arguments=['-d', LaunchConfiguration('rvizconfig')],
     )
-
-    # Ign - ROS Bridge
-    # clock_bridge = Node(
-    #   package='ros_ign_bridge',
-    #   executable='parameter_bridge',
-    #   name='clock_bridge',
-    #   arguments=[
-    #     '/clock' + '@rosgraph_msgs/msg/Clock' + '[ignition.msgs.Clock'
-    #   ],
-    #   output='screen'
-    # )
-    
-    # tf_bridge = Node(
-    #   package='ros_ign_bridge',
-    #   executable='parameter_bridge',
-    #   name='tf_bridge',
-    #   arguments=[
-    #     '/tf' + '@tf2_msgs/msg/TFMessage' + '[ignition.msgs.Pose_V'
-    #   ],
-    #   output='screen'
-    # )
-
   
     ignition_spawn_entity = Node(
       package='ros_ign_gazebo',
@@ -74,9 +54,10 @@ def generate_launch_description():
       arguments=[
         '-name', 'balltze',
         '-allow_renaming', 'true',
-        '-topic', 'robot_description'
+        '-topic', 'robot_description',
+        '-z', '0.5'
       ],
-      output='screen',
+      output='screen'
     )
 
     load_joint_state_broadcaster = ExecuteProcess(
@@ -96,28 +77,20 @@ def generate_launch_description():
                               description='Absolute path to rviz config file'),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
-                [PathJoinSubstitution([get_package_share_directory('ros_ign_gazebo'),
-                              'launch', 'ign_gazebo.launch.py'])]),
-            launch_arguments=[('ign_args', [' -r -v 4 empty.sdf'])]),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=ignition_spawn_entity,
-                on_exit=[load_joint_state_broadcaster],
-            )
-        ),
+                [PathJoinSubstitution([pkg_ros_ign_gazebo, 'launch', 'ign_gazebo.launch.py'])]),
+            launch_arguments=[('ign_args', [' -r -v 0 empty.sdf'])]),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_broadcaster,
-                on_exit=[load_joint_trajectory_controller],
+                on_exit=[rviz_node],
             )
         ),
-        # Launch Arguments
+        load_joint_state_broadcaster,
+        load_joint_trajectory_controller,
+        robot_state_publisher_node,
+        ignition_spawn_entity,
         DeclareLaunchArgument(
             'use_sim_time',
             default_value=use_sim_time,
             description='If true, use simulated clock'),
-        robot_state_publisher_node,
-        ignition_spawn_entity,
-
-        # rviz_node
     ])

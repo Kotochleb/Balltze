@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
     <xacro:macro name="ros2_control_system">
 
-      <xacro:macro name="ros2_control_joint" params="joint_name">
+      <xacro:macro name="ros2_control_joint" params="joint_name init_pos">
         <xacro:property name="motor_range"   value="${300.0 / 360.0 * (2.0 * pi)}" />
         <xacro:property name="motor_max_vel" value="${114.0 * (2.0 * pi / 60.0)}" />
         <xacro:property name="motor_max_eff" value="1.5" />
@@ -22,7 +22,7 @@
           </command_interface>
 
           <state_interface name="position">
-            <param name="initial_value">0.0</param>
+            <param name="initial_value">${init_pos}</param>
           </state_interface>
           <state_interface name="velocity" />
           <state_interface name="effort" />
@@ -30,9 +30,9 @@
       </xacro:macro>
 
       <xacro:macro name="leg_joints" params="leg_prefix">
-        <xacro:ros2_control_joint joint_name="${leg_prefix}_body_link_to_coxa_link_joint" />
-        <xacro:ros2_control_joint joint_name="${leg_prefix}_coxa_link_to_femur_link_joint" />
-        <xacro:ros2_control_joint joint_name="${leg_prefix}_femur_link_to_tibia_link_joint" />
+        <xacro:ros2_control_joint joint_name="${leg_prefix}_body_link_to_coxa_link_joint"   init_pos="0.0"/>
+        <xacro:ros2_control_joint joint_name="${leg_prefix}_coxa_link_to_femur_link_joint"  init_pos="${-pi/4}"/>
+        <xacro:ros2_control_joint joint_name="${leg_prefix}_femur_link_to_tibia_link_joint" init_pos="0.0"/>
       </xacro:macro>
 
       <ros2_control name="IgnitionSystem" type="system">
@@ -48,7 +48,7 @@
       </ros2_control>
 
       <gazebo>
-        <plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+        <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
           <parameters>$(find balltze_description)/config/controllers.yaml</parameters>
         </plugin>
       </gazebo>

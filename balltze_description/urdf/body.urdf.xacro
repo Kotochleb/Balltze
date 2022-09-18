@@ -31,13 +31,13 @@
     <link name="imu_link"></link>
 
     <joint name="base_link_to_body_link_joint" type="fixed">
-      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <origin xyz="0.0 0.0 0.002" rpy="0.0 0.0 0.0"/>
       <parent link="base_link"/>
       <child link="body_link"/>
     </joint>
 
     <joint name="body_link_to_imu_link_joint" type="fixed">
-      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <origin xyz="0.0 0.0 0.01" rpy="0.0 0.0 0.0"/>
       <parent link="body_link"/>
       <child link="imu_link"/>
     </joint>

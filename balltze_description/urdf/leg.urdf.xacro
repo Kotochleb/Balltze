@@ -9,7 +9,7 @@
     <xacro:property name="coxa_to_femur_z" value="0.0" />
     <xacro:macro name="coxa_inertial">
       <inertial>
-        <mass value="0.00000000001" />
+        <mass value="0.1" />
         <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
       </inertial>
     </xacro:macro>
@@ -19,7 +19,7 @@
     <xacro:property name="femur_to_tibia_z" value="-0.11" />
     <xacro:macro name="femur_inertial">
       <inertial>
-        <mass value="0.00000000001" />
+        <mass value="0.1" />
         <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
       </inertial>
     </xacro:macro>
@@ -29,7 +29,7 @@
     <xacro:property name="tibia_to_tip_z" value="0.0" />
     <xacro:macro name="tibia_inertial">
       <inertial>
-        <mass value="0.00000000001" />
+        <mass value="0.1" />
         <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
       </inertial>
     </xacro:macro>
@@ -98,7 +98,7 @@
     <!-- LEG JOINT -->
     <xacro:macro name="leg_joint" params="leg_prefix parent child xyz axis">
       <!-- JOINT DEFINITION -->
-      <joint name="${leg_prefix}_${parent}_to_${parent}_joint" type="revolute">
+      <joint name="${leg_prefix}_${parent}_to_${child}_joint" type="revolute">
         <xacro:if value="${parent == 'body_link'}">
           <parent link="${parent}" />
         </xacro:if>
@@ -110,9 +110,11 @@
         <origin xyz="${xyz}" rpy="0.0 0.0 0.0" />
         <axis xyz="${axis}" />
 
+        <dynamics damping="0.2"/>
+
         <limit effort="${motor_max_eff}"
-               lower="${motor_range/2.0}"
-               upper="${-motor_range/2.0}"
+               lower="${-motor_range/2.0}"
+               upper="${motor_range/2.0}"
                velocity="${motor_max_vel}" />
       </joint>
     </xacro:macro>
