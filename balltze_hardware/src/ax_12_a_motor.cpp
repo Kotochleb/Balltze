@@ -3,6 +3,8 @@
 #include <memory>
 #include <vector>
 #include <cfloat>
+#include <limits>
+#include <cmath>
 
 #include "dynamixel_sdk/dynamixel_sdk.h"
 
@@ -125,9 +127,9 @@ void AX12AMotor::qeurry_joint() {
 
   if (bus_error_occured()) {
     error_cnt_++;
-    position_ = NAN;
-    velocity_ = NAN;
-    effort_ = NAN;
+    position_ = std::numeric_limits<double>::quiet_NaN();
+    velocity_ = std::numeric_limits<double>::quiet_NaN();
+    effort_ = std::numeric_limits<double>::quiet_NaN();
   }
   else {
     position_ = data_to_pos(&data[0]);
@@ -155,10 +157,15 @@ void AX12AMotor::pos_to_data(float val, uint8_t *data) {
 
 void AX12AMotor::vel_to_data(float val, uint8_t *data) {
   // stop motor istaed of setting max speed if value it close to 0.0 rad/s
-  if (std::fabs(val) <= 0.01) {
+  if (std::isnan(val)) {
     data[0] = 1;
     data[1] = 0;
     return;
+  }
+
+  // prevent getting close to integer equal to 0 setting motor to full speed
+  if (std::fabs(val) < 0.1) {
+    val = 0.1;
   }
   // offset center of rotation by half of the available rotation
   float normalised_vel = std::fabs(val) / MOTOR_MAX_VELOCITY_;
@@ -170,6 +177,12 @@ void AX12AMotor::vel_to_data(float val, uint8_t *data) {
 
 
 void AX12AMotor::eff_to_data(float val, uint8_t *data) {
+  if (std::isnan(val)) {
+    data[0] = 1;
+    data[1] = 0;
+    return;
+  }
+
   // offset center of rotation by half of the available rotation
   float eff_normalised = std::fabs(val) / MOTOR_MAX_EFFORT_;
   int16_t raw_data = int16_t(eff_normalised * 1023.0f);

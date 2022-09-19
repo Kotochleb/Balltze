@@ -16,10 +16,10 @@
             <param name="min">-${motor_max_vel}</param>
             <param name="max">${motor_max_vel}</param>
           </command_interface>
-          <command_interface name="effort">
+          <!-- <command_interface name="effort">
             <param name="min">-${motor_max_eff}</param>
             <param name="max">${motor_max_eff}</param>
-          </command_interface>
+          </command_interface> -->
 
           <state_interface name="position">
             <param name="initial_value">${init_pos}</param>

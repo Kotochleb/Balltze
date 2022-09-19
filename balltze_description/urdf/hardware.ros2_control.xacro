@@ -31,10 +31,10 @@
         </hardware>
 
 
-        <xacro:leg_joints leg_prefix="front_left"  coxa_motor_id="10" />
-        <!-- <xacro:leg_joints leg_prefix="front_right" coxa_motor_id="3" />
-        <xacro:leg_joints leg_prefix="rear_left"   coxa_motor_id="6" />
-        <xacro:leg_joints leg_prefix="rear_right"  coxa_motor_id="9" /> -->
+        <xacro:leg_joints leg_prefix="front_left"  coxa_motor_id="1" />
+        <xacro:leg_joints leg_prefix="front_right" coxa_motor_id="4" />
+        <!-- <xacro:leg_joints leg_prefix="rear_left"   coxa_motor_id="7" /> -->
+        <!-- <xacro:leg_joints leg_prefix="rear_right"  coxa_motor_id="10" /> -->
       
       </ros2_control>
     </xacro:macro>

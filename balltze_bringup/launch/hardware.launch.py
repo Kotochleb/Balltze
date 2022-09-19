@@ -21,6 +21,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default=False)
 
     balltze_description = get_package_share_directory('balltze_description')
+    balltze_bringup = get_package_share_directory('balltze_bringup')
     xacro_file = PathJoinSubstitution([balltze_description, 'urdf', 'balltze.urdf.xacro'])
     rviz_config = PathJoinSubstitution([balltze_description, 'rviz', 'model_preveiw.rviz'])
 
@@ -32,12 +33,17 @@ def generate_launch_description():
         ])
     }
 
-    robot_controllers = PathJoinSubstitution([balltze_description, 'config', 'controllers.yaml'])
+    robot_controllers = PathJoinSubstitution([balltze_bringup, 'config', 'controllers.yaml'])
 
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         parameters=[robot_description]
+    )
+
+    rqt_joint_trajectory_controller = Node(
+        package='rqt_joint_trajectory_controller',
+        executable='rqt_joint_trajectory_controller',
     )
 
     rviz_node = Node(
@@ -88,6 +94,12 @@ def generate_launch_description():
             event_handler=OnProcessExit(
                 target_action=joint_state_broadcaster_spawner,
                 on_exit=[robot_controller_spawner],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=robot_controller_spawner,
+                on_exit=[rqt_joint_trajectory_controller],
             )
         ),
         joint_state_broadcaster_spawner,

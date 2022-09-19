@@ -43,9 +43,9 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
 
 
   for (const hardware_interface::ComponentInfo& joint : info_.joints) {
-    if (joint.command_interfaces.size() != command_interfaces_.size()) {
-      RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' has %zu command interfaces found. 3 expected.",
-                   joint.name.c_str(), joint.command_interfaces.size());
+    if (joint.command_interfaces.size() < command_interfaces_.size()) {
+      RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' has %zu command interfaces found. Expected more than %zu.",
+                   joint.name.c_str(), joint.command_interfaces.size(), command_interfaces_.size());
       return CallbackReturn::ERROR;
     }
 
@@ -54,6 +54,17 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
         RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' have '%s' command interfaces found. '%s' expected.",
                     joint.name.c_str(), joint.command_interfaces[i].name.c_str(), command_interfaces_[i].c_str());
         return CallbackReturn::ERROR;
+      }
+    }
+
+    if (joint.command_interfaces.size() > command_interfaces_.size()) {
+      if (joint.command_interfaces[2].name != hardware_interface::HW_IF_EFFORT) {
+        RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' have '%s' as a last command interfaces. '%s' expected.",
+                    joint.name.c_str(), joint.command_interfaces[2].name.c_str(), hardware_interface::HW_IF_EFFORT);
+        return CallbackReturn::ERROR;
+      }
+      else {
+        has_effort_interface_ = true;
       }
     }
 
@@ -379,11 +390,20 @@ return_type BalltzeDynamixelSystem::read(const rclcpp::Time&, const rclcpp::Dura
 return_type BalltzeDynamixelSystem::write(const rclcpp::Time&, const rclcpp::Duration&)
 {
   for (auto & joint : info_.joints) {
-    motors_.at(joint.name)->set_state(
-      pos_commands_.at(joint.name),
-      vel_commands_.at(joint.name),
-      eff_commands_.at(joint.name)
-    );
+    if (has_effort_interface_) {
+      motors_.at(joint.name)->set_state(
+        pos_commands_.at(joint.name),
+        vel_commands_.at(joint.name),
+        eff_commands_.at(joint.name)
+      );
+    }
+    else {
+      motors_.at(joint.name)->set_state(
+        pos_commands_.at(joint.name),
+        vel_commands_.at(joint.name),
+        1.5
+      );
+    }
 
     auto motor_error = motors_.at(joint.name)->get_motor_error_report();
     if (motor_error->checksum) {

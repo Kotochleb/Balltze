@@ -70,6 +70,7 @@ private:
   int baudrate_;
   int return_delay_;
   bool motors_connected_ = false;
+  bool has_effort_interface_ = false;
 
   std::shared_ptr<dynamixel::PortHandler> portHandler_;
   std::shared_ptr<dynamixel::PacketHandler> packetHandler_;
@@ -91,8 +92,7 @@ private:
   };
   const std::vector<std::string> command_interfaces_ = {
     hardware_interface::HW_IF_POSITION,
-    hardware_interface::HW_IF_VELOCITY,
-    hardware_interface::HW_IF_EFFORT
+    hardware_interface::HW_IF_VELOCITY
   };
 
   const std::vector<std::string> state_interfaces_ = {

@@ -10,7 +10,7 @@
     <xacro:macro name="coxa_inertial">
       <inertial>
         <mass value="0.1" />
-        <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+        <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
       </inertial>
     </xacro:macro>
 
@@ -20,7 +20,7 @@
     <xacro:macro name="femur_inertial">
       <inertial>
         <mass value="0.1" />
-        <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+        <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
       </inertial>
     </xacro:macro>
 
@@ -30,7 +30,7 @@
     <xacro:macro name="tibia_inertial">
       <inertial>
         <mass value="0.1" />
-        <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+        <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
       </inertial>
     </xacro:macro>
 
@@ -96,7 +96,7 @@
 
 
     <!-- LEG JOINT -->
-    <xacro:macro name="leg_joint" params="leg_prefix parent child xyz axis">
+    <xacro:macro name="leg_joint" params="leg_prefix parent child xyz axis joint_min joint_max">
       <!-- JOINT DEFINITION -->
       <joint name="${leg_prefix}_${parent}_to_${child}_joint" type="revolute">
         <xacro:if value="${parent == 'body_link'}">
@@ -110,11 +110,11 @@
         <origin xyz="${xyz}" rpy="0.0 0.0 0.0" />
         <axis xyz="${axis}" />
 
-        <dynamics damping="0.2"/>
+        <dynamics damping="0.0"/>
 
         <limit effort="${motor_max_eff}"
-               lower="${-motor_range/2.0}"
-               upper="${motor_range/2.0}"
+               lower="${joint_min}"
+               upper="${joint_max}"
                velocity="${motor_max_vel}" />
       </joint>
     </xacro:macro>
@@ -156,6 +156,8 @@
       child="coxa_link"
       xyz="${body_to_coxa_xyz}"
       axis="1 0 0"
+      joint_min="${-pi/4.0}"
+      joint_max="${pi/4.0}"
     />
 
     <xacro:leg_joint
@@ -164,6 +166,8 @@
       child="femur_link"
       xyz="${coxa_to_femur_xyz}"
       axis="0 1 0"
+      joint_min="${-pi/2.0}"
+      joint_max="${pi/2.0}"
     />
 
     <xacro:leg_joint
@@ -172,6 +176,8 @@
       child="tibia_link"
       xyz="${femur_tibia_xyz}"
       axis="0 1 0"
+      joint_min="${-pi/2.0}"
+      joint_max="${pi/2.0}"
     />
 
     <joint name="${leg_prefix}_tibia_link_to_tip_link_joint" type="fixed">
