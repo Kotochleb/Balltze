@@ -84,12 +84,12 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(name='rvizconfig', default_value=rviz_config,
                               description='Absolute path to rviz config file'),
-        # RegisterEventHandler(
-        #     event_handler=OnProcessExit(
-        #         target_action=joint_state_broadcaster_spawner,
-        #         on_exit=[rviz_node],
-        #     )
-        # ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=joint_state_broadcaster_spawner,
+                on_exit=[rviz_node],
+            )
+        ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=joint_state_broadcaster_spawner,

@@ -18,14 +18,6 @@
     <!-- BODY DECLARATION -->
     <xacro:body.body />
 
-    <link name="world"></link>
-
-    <joint name="asdf" type="fixed">
-      <origin xyz="0.0 0.0 1.0" rpy="0.0 0.0 0.0"/>
-      <parent link="world"/>
-      <child link="base_link"/>
-    </joint>
-
     <!-- LED DECLARATION -->
     <xacro:leg.leg leg_prefix="front_left"  robot_width="0.15" robot_length="0.3" />
     <xacro:leg.leg leg_prefix="front_right" robot_width="0.15" robot_length="0.3" />

@@ -49,7 +49,7 @@
 
       <gazebo>
         <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
-          <parameters>$(find balltze_description)/config/controllers.yaml</parameters>
+          <parameters>$(find balltze_bringup)/config/controllers.yaml</parameters>
         </plugin>
       </gazebo>
     </xacro:macro>

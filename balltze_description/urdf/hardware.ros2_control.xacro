@@ -6,7 +6,7 @@
         <joint name="${joint_name}">
           <command_interface name="position" />
           <command_interface name="velocity" />
-          <command_interface name="effort" />
+          <!-- <command_interface name="effort" /> -->
 
           <state_interface name="position" />
           <state_interface name="velocity" />
@@ -33,8 +33,8 @@
 
         <xacro:leg_joints leg_prefix="front_left"  coxa_motor_id="1" />
         <xacro:leg_joints leg_prefix="front_right" coxa_motor_id="4" />
-        <!-- <xacro:leg_joints leg_prefix="rear_left"   coxa_motor_id="7" /> -->
-        <!-- <xacro:leg_joints leg_prefix="rear_right"  coxa_motor_id="10" /> -->
+        <xacro:leg_joints leg_prefix="rear_left"   coxa_motor_id="7" />
+        <xacro:leg_joints leg_prefix="rear_right"  coxa_motor_id="10" />
       
       </ros2_control>
     </xacro:macro>
