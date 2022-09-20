@@ -55,7 +55,7 @@ def generate_launch_description():
         '-name', 'balltze',
         '-allow_renaming', 'true',
         '-topic', 'robot_description',
-        '-z', '0.5'
+        '-z', '0.2'
       ],
       output='screen'
     )

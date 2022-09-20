@@ -31,7 +31,7 @@
 
       <xacro:macro name="leg_joints" params="leg_prefix">
         <xacro:ros2_control_joint joint_name="${leg_prefix}_body_link_to_coxa_link_joint"   init_pos="0.0"/>
-        <xacro:ros2_control_joint joint_name="${leg_prefix}_coxa_link_to_femur_link_joint"  init_pos="${-pi/4}"/>
+        <xacro:ros2_control_joint joint_name="${leg_prefix}_coxa_link_to_femur_link_joint"  init_pos="${pi/4.0}"/>
         <xacro:ros2_control_joint joint_name="${leg_prefix}_femur_link_to_tibia_link_joint" init_pos="0.0"/>
       </xacro:macro>
 

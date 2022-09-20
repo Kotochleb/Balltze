@@ -83,7 +83,8 @@
 
         <collision>
           <geometry>
-            <mesh filename="file://$(find balltze_description)/meshes/${side}_${link_name}_collision.stl" scale="0.1 0.1 0.1" />
+            <sphere radius="0.02"/>
+            <!-- <mesh filename="file://$(find balltze_description)/meshes/${side}_${link_name}_collision.stl" scale="0.1 0.1 0.1" /> -->
           </geometry>
           <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
         </collision>
@@ -142,7 +143,8 @@
 
       <collision>
         <geometry>
-          <mesh filename="file://$(find balltze_description)/meshes/${side}_coxa_link_collision.stl" scale="0.1 0.1 0.1" />
+          <sphere radius="0.02"/>
+          <!-- <mesh filename="file://$(find balltze_description)/meshes/${side}_coxa_link_collision.stl" scale="0.1 0.1 0.1" /> -->
         </geometry>
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
       </collision>
