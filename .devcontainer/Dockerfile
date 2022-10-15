@@ -1,4 +1,4 @@
-FROM osrf/ros:humble-desktop
+FROM osrf/ros:galactic-desktop
 
 SHELL ["/bin/bash", "-c"]
 
@@ -33,13 +33,15 @@ RUN apt update && \
         pytest-rerunfailures \
         pytest
 
-WORKDIR /ros2_ws/src
-RUN . /opt/ros/$ROS_DISTRO/setup.bash && \
-    colcon build
     
-COPY . /ros2_ws
+RUN useradd -rm -d /home/balltze -s /bin/bash -g root -G sudo -u 1001 balltze && \
+    echo 'balltze:balltze' | chpasswd
+USER balltze
+
+COPY . /home/balltze/ros2_ws
+WORKDIR /home/balltze/ros2_ws
 
 RUN echo ". /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc \
-    && echo ". /ros2_ws/install/setup.bash" >> ~/.bashrc
+    && echo ". /home/balltze/ros2_ws/install/setup.bash" >> ~/.bashrc
 
 CMD [ "sleep", "infinity" ]

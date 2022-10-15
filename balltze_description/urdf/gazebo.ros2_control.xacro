@@ -3,14 +3,14 @@
     <xacro:macro name="ros2_control_system">
 
       <xacro:macro name="ros2_control_joint" params="joint_name init_pos">
-        <xacro:property name="motor_range"   value="${300.0 / 360.0 * (2.0 * pi)}" />
+        <xacro:property name="motorrange"   value="${300.0 / 360.0 * (2.0 * pi)}" />
         <xacro:property name="motor_max_vel" value="${114.0 * (2.0 * pi / 60.0)}" />
         <xacro:property name="motor_max_eff" value="1.5" />
 
         <joint name="${joint_name}">
           <command_interface name="position">
-            <param name="min">-${motor_range/2.0}</param>
-            <param name="max">${motor_range/2.0}</param>
+            <param name="min">-${motorrange/2.0}</param>
+            <param name="max">${motorrange/2.0}</param>
           </command_interface>
           <command_interface name="velocity">
             <param name="min">-${motor_max_vel}</param>
@@ -30,9 +30,9 @@
       </xacro:macro>
 
       <xacro:macro name="leg_joints" params="leg_prefix">
-        <xacro:ros2_control_joint joint_name="${leg_prefix}_body_link_to_coxa_link_joint"   init_pos="0.0"/>
-        <xacro:ros2_control_joint joint_name="${leg_prefix}_coxa_link_to_femur_link_joint"  init_pos="${pi/4.0}"/>
-        <xacro:ros2_control_joint joint_name="${leg_prefix}_femur_link_to_tibia_link_joint" init_pos="0.0"/>
+        <xacro:ros2_control_joint joint_name="${leg_prefix}_joint_1" init_pos="0.0"/>
+        <xacro:ros2_control_joint joint_name="${leg_prefix}_joint_2" init_pos="${pi/4.0}"/>
+        <xacro:ros2_control_joint joint_name="${leg_prefix}_joint_3" init_pos="0.0"/>
       </xacro:macro>
 
       <ros2_control name="IgnitionSystem" type="system">
@@ -40,17 +40,80 @@
           <plugin>ign_ros2_control/IgnitionSystem</plugin>
         </hardware>
 
-        <xacro:leg_joints leg_prefix="front_left" />
-        <xacro:leg_joints leg_prefix="front_right" />
-        <xacro:leg_joints leg_prefix="rear_left" />
-        <xacro:leg_joints leg_prefix="rear_right" />
+        <xacro:leg_joints leg_prefix="fl" />
+        <xacro:leg_joints leg_prefix="fr" />
+        <xacro:leg_joints leg_prefix="rl" />
+        <xacro:leg_joints leg_prefix="rr" />
+
+        <sensor name="imu_sensor">
+          <state_interface name="orientation.x"/>
+          <state_interface name="orientation.y"/>
+          <state_interface name="orientation.z"/>
+          <state_interface name="orientation.w"/>
+          <state_interface name="angular_velocity.x"/>
+          <state_interface name="angular_velocity.y"/>
+          <state_interface name="angular_velocity.z"/>
+          <state_interface name="linear_acceleration.x"/>
+          <state_interface name="linear_acceleration.y"/>
+          <state_interface name="linear_acceleration.z"/>
+        </sensor>
       
       </ros2_control>
 
+      <!-- <ros2_control name="BalltzeIgnitionTipSensor" type="system">
+        <hardware>
+          <plugin>balltze_simulation/TipSensor</plugin>
+        </hardware>
+
+        <gpio name="fl_tip">
+          <param name="topic">/balltze/fl_tip/contact</param>
+          <state_interface name="logical"/>
+            <param name="link">fl_tip</param>
+          <state_interface />
+        </gpio>
+
+        <gpio name="fr_tip">
+          <param name="topic">/balltze/fr_tip/contact</param>
+          <state_interface name="logical"/>
+            <param name="link">fr_tip</param>
+          <state_interface />
+        </gpio>
+
+        <gpio name="rl_tip">
+          <param name="topic">/balltze/rl_tip/contact</param>
+          <state_interface name="logical"/>
+            <param name="link">rl_tip</param>
+          <state_interface />
+        </gpio>
+
+        <gpio name="rr_tip">
+          <param name="topic">/balltze/rr_tip/contact</param>
+          <state_interface name="logical"/>
+            <param name="link">rr_tip</param>
+          <state_interface />
+        </gpio>
+      
+      </ros2_control> -->
+
       <gazebo>
-        <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+        <plugin filename="ign_ros2_control-system"
+                name="ign_ros2_control::IgnitionROS2ControlPlugin">
           <parameters>$(find balltze_bringup)/config/controllers.yaml</parameters>
         </plugin>
       </gazebo>
+
+      <gazebo>
+        <plugin filename="libignition-gazebo-contact-system.so"
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </gazebo>
+
+      <gazebo>
+        <plugin
+          filename="ignition-gazebo-imu-system"
+          name="ignition::gazebo::systems::Imu">
+        </plugin>
+      </gazebo>
+
     </xacro:macro>
 </robot>

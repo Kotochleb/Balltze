@@ -33,6 +33,9 @@ def generate_launch_description():
         ])
     }
 
+    balltze_bringup = get_package_share_directory('balltze_bringup')
+    champ_confgi = PathJoinSubstitution([balltze_bringup, 'config', 'controllers.yaml'])
+
     robot_controllers = PathJoinSubstitution([balltze_bringup, 'config', 'controllers.yaml'])
 
     robot_state_publisher_node = Node(
@@ -41,10 +44,10 @@ def generate_launch_description():
         parameters=[robot_description]
     )
 
-    rqt_joint_trajectory_controller = Node(
-        package='rqt_joint_trajectory_controller',
-        executable='rqt_joint_trajectory_controller',
-    )
+    # rqt_joint_trajectory_controller = Node(
+    #     package='rqt_joint_trajectory_controller',
+    #     executable='rqt_joint_trajectory_controller',
+    # )
 
     rviz_node = Node(
         package='rviz2',
@@ -84,24 +87,24 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(name='rvizconfig', default_value=rviz_config,
                               description='Absolute path to rviz config file'),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=joint_state_broadcaster_spawner,
-                on_exit=[rviz_node],
-            )
-        ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=joint_state_broadcaster_spawner,
+        #         on_exit=[rviz_node],
+        #     )
+        # ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=joint_state_broadcaster_spawner,
                 on_exit=[robot_controller_spawner],
             )
         ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=robot_controller_spawner,
-                on_exit=[rqt_joint_trajectory_controller],
-            )
-        ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=robot_controller_spawner,
+        #         on_exit=[rqt_joint_trajectory_controller],
+        #     )
+        # ),
         joint_state_broadcaster_spawner,
         robot_state_publisher_node,
         control_node,

@@ -1,9 +1,11 @@
 #ifndef BALLTZE_HARDWARE_
 #define BALLTZE_HARDWARE_
 
+#include <condition_variable>
 #include <map>
 #include <memory>
 #include <string>
+#include <thread>
 
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_lifecycle/state.hpp"
@@ -16,38 +18,37 @@
 
 #include "dynamixel_sdk/dynamixel_sdk.h"
 
-#include "balltze_hardware/ax_12_a_motor.hpp"
 #include "balltze_hardware/visibility_control.hpp"
 
 
-namespace balltze_dynamixel_system {
+namespace balltze_tip_gpio {
 
 using return_type = hardware_interface::return_type;
 using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 using StateInterface = hardware_interface::StateInterface;
 using CommandInterface = hardware_interface::CommandInterface;
 
-class BalltzeDynamixelSystem : public hardware_interface::SystemInterface {
+class BalltzeTipGPIO : public hardware_interface::SystemInterface {
 public:
   RCLCPP_SHARED_PTR_DEFINITIONS(BalltzeDynamixelSystem)
 
   BALLTZE_HARDWARE_PUBLIC
-  CallbackReturn on_init(const hardware_interface::HardwareInfo& hardware_info) final;
+  CallbackReturn on_init(const hardware_interface::HardwareInfo& hardware_info) override;
 
   BALLTZE_HARDWARE_PUBLIC
-  std::vector<StateInterface> export_state_interfaces() final;
+  std::vector<StateInterface> export_state_interfaces() override;
 
   BALLTZE_HARDWARE_PUBLIC
-  std::vector<CommandInterface> export_command_interfaces() final;
+  std::vector<CommandInterface> export_command_interfaces() override;
 
   BALLTZE_HARDWARE_PUBLIC
-  CallbackReturn on_configure(const rclcpp_lifecycle::State&) final;
+  CallbackReturn on_configure(const rclcpp_lifecycle::State&) override;
 
   BALLTZE_HARDWARE_PUBLIC
-  CallbackReturn on_activate(const rclcpp_lifecycle::State&) final;
+  CallbackReturn on_activate(const rclcpp_lifecycle::State&) override;
 
   BALLTZE_HARDWARE_PUBLIC
-  CallbackReturn on_deactivate(const rclcpp_lifecycle::State&) final;
+  CallbackReturn on_deactivate(const rclcpp_lifecycle::State&) override;
 
   BALLTZE_HARDWARE_PUBLIC
   CallbackReturn on_cleanup(const rclcpp_lifecycle::State&);
@@ -59,22 +60,15 @@ public:
   CallbackReturn on_error(const rclcpp_lifecycle::State&);
 
   BALLTZE_HARDWARE_PUBLIC
-  hardware_interface::return_type read();
+  hardware_interface::return_type read(const rclcpp::Time&, const rclcpp::Duration&) override;
 
   BALLTZE_HARDWARE_PUBLIC
-  hardware_interface::return_type write();
+  hardware_interface::return_type write(const rclcpp::Time&, const rclcpp::Duration&) override;
+
 
 
 private:
-  std::string serial_port_;
-  int baudrate_;
-  int return_delay_;
-  bool motors_connected_ = false;
-  bool has_effort_interface_ = false;
-
-  std::shared_ptr<dynamixel::PortHandler> portHandler_;
-  std::shared_ptr<dynamixel::PacketHandler> packetHandler_;
-  std::unique_ptr<ax_12_a_motor::AX12AMotor> broadcast_motor_; 
+  std::unique_ptr<std::string> pin_paths_; 
 
   // Store the command for the simulated robot
   std::map<std::string, std::unique_ptr<ax_12_a_motor::AX12AMotor>> motors_;

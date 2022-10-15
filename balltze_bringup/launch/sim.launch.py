@@ -60,6 +60,11 @@ def generate_launch_description():
       output='screen'
     )
 
+    rqt_joint_trajectory_controller = Node(
+        package='rqt_joint_trajectory_controller',
+        executable='rqt_joint_trajectory_controller',
+    )
+
     load_joint_state_broadcaster = ExecuteProcess(
         cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
              'joint_state_broadcaster'],
@@ -79,12 +84,18 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(
                 [PathJoinSubstitution([pkg_ros_ign_gazebo, 'launch', 'ign_gazebo.launch.py'])]),
             launch_arguments=[('ign_args', [' -r -v 0 empty.sdf'])]),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_broadcaster,
-                on_exit=[rviz_node],
-            )
-        ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=load_joint_state_broadcaster,
+        #         on_exit=[rviz_node],
+        #     )
+        # ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=load_joint_trajectory_controller,
+        #         on_exit=[rqt_joint_trajectory_controller],
+        #     )
+        # ),
         load_joint_state_broadcaster,
         load_joint_trajectory_controller,
         robot_state_publisher_node,

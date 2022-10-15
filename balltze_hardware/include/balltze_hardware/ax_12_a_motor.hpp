@@ -25,9 +25,11 @@ class AX12AMotor {
 public:
   AX12AMotor(
     const uint8_t id,
+    const bool inverted,
     const std::shared_ptr<dynamixel::PortHandler> portHandler,
     const std::shared_ptr<dynamixel::PacketHandler> packetHandler) : 
-    id_(id), portHandler_(portHandler), packetHandler_(packetHandler) {};
+    id_(id), direction_(inverted ? -1.0f : 1.0f),
+    portHandler_(portHandler), packetHandler_(packetHandler) {};
   bool ping();
   void qeurry_joint();
   void query_stats();
@@ -47,6 +49,7 @@ public:
   float get_voltage() {return voltage_;}
   float get_temperature() {return temperature_;}
   std::shared_ptr<ErrorReport> get_motor_error_report();
+  const float direction_;
 
   
 private:

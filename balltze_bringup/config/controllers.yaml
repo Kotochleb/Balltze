@@ -1,6 +1,6 @@
 controller_manager:
   ros__parameters:
-    update_rate: 30  # Hz
+    update_rate: 40  # Hz
 
     joint_trajectory_controller:
       type: joint_trajectory_controller/JointTrajectoryController
@@ -11,39 +11,24 @@ controller_manager:
 joint_trajectory_controller:
   ros__parameters:
     joints:
-      - front_left_body_link_to_coxa_link_joint
-      - front_left_coxa_link_to_femur_link_joint
-      - front_left_femur_link_to_tibia_link_joint
-      - front_right_body_link_to_coxa_link_joint
-      - front_right_coxa_link_to_femur_link_joint
-      - front_right_femur_link_to_tibia_link_joint
-      - rear_left_body_link_to_coxa_link_joint
-      - rear_left_coxa_link_to_femur_link_joint
-      - rear_left_femur_link_to_tibia_link_joint
-      - rear_right_body_link_to_coxa_link_joint
-      - rear_right_coxa_link_to_femur_link_joint
-      - rear_right_femur_link_to_tibia_link_joint
+      - fl_joint_1
+      - fl_joint_2
+      - fl_joint_3
+      - fr_joint_1
+      - fr_joint_2
+      - fr_joint_3
+      - rl_joint_1
+      - rl_joint_2
+      - rl_joint_3
+      - rr_joint_1
+      - rr_joint_2
+      - rr_joint_3
     command_interfaces:
       - position
-      - velocity
+      # - velocity
     state_interfaces:
       - position
       - velocity
     state_publish_rate: 30.0
     action_monitor_rate: 20.0
     open_loop_control: true
-    # constraints:
-    #   stopped_velocity_tolerance: 0.2
-    #   goal_time: 0.0
-    #   front_left_body_link_to_coxa_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   front_left_coxa_link_to_femur_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   front_left_femur_link_to_tibia_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   front_right_body_link_to_coxa_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   front_right_coxa_link_to_femur_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   front_right_femur_link_to_tibia_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   rear_left_body_link_to_coxa_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   rear_left_coxa_link_to_femur_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   rear_left_femur_link_to_tibia_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   rear_right_body_link_to_coxa_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   rear_right_coxa_link_to_femur_link_joint: { trajectory: 0.2, goal: 0.1 }
-    #   rear_right_femur_link_to_tibia_link_joint: { trajectory: 0.2, goal: 0.1 }

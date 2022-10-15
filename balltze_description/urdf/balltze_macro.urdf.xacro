@@ -19,10 +19,10 @@
     <xacro:body.body />
 
     <!-- LED DECLARATION -->
-    <xacro:leg.leg leg_prefix="front_left"  robot_width="0.15" robot_length="0.3" />
-    <xacro:leg.leg leg_prefix="front_right" robot_width="0.15" robot_length="0.3" />
-    <xacro:leg.leg leg_prefix="rear_left"   robot_width="0.15" robot_length="0.3" />
-    <xacro:leg.leg leg_prefix="rear_right"  robot_width="0.15" robot_length="0.3" />
+    <xacro:leg.leg leg_prefix="fl" robot_width="0.15" robot_length="0.3" />
+    <xacro:leg.leg leg_prefix="fr" robot_width="0.15" robot_length="0.3" />
+    <xacro:leg.leg leg_prefix="rl" robot_width="0.15" robot_length="0.3" />
+    <xacro:leg.leg leg_prefix="rr" robot_width="0.15" robot_length="0.3" />
 
     <xacro:control.ros2_control_system />
 

@@ -11,6 +11,8 @@
 #include <fstream>
 #include <string>
 #include <thread>
+#include <cctype>
+#include <sstream>
 
 #include "rclcpp/logging.hpp"
 
@@ -82,7 +84,7 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
       }
     }
 
-    if (joint.parameters.size() != 1) {
+    if (joint.parameters.size() != 2) {
       RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' has %zu parameters. 1 expected.",
                    joint.name.c_str(), joint.parameters.size());
       return CallbackReturn::ERROR;
@@ -90,6 +92,12 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
 
     if (joint.parameters.find("id") == joint.parameters.end()) {
       RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' does not have 'id' parameter specified.",
+                   joint.name.c_str());
+      return CallbackReturn::ERROR;
+    }
+
+    if (joint.parameters.find("inverted") == joint.parameters.end()) {
+      RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' does not have 'inverted' parameter specified.",
                    joint.name.c_str());
       return CallbackReturn::ERROR;
     }
@@ -135,7 +143,12 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
 
     try {
       const int id = std::stoi(joint.parameters.at("id"));
-      motors_.insert({joint.name, std::make_unique<ax_12_a_motor::AX12AMotor>(id, portHandler_, packetHandler_)});
+      bool inverted;
+      std::string inverted_str = joint.parameters.at("inverted");
+      std::transform(inverted_str.begin(), inverted_str.end(), inverted_str.begin(), [](unsigned char c){ return std::tolower(c); });
+      std::istringstream(inverted_str) >> std::boolalpha >> inverted;
+  
+      motors_.insert({joint.name, std::make_unique<ax_12_a_motor::AX12AMotor>(id, inverted, portHandler_, packetHandler_)});
     }
     catch(std::invalid_argument const& ex) {
       RCLCPP_ERROR(rclcpp::get_logger("BalltzeDynamixelSystem"), "Joint '%s' parameter: 'id' is invalid type.",
@@ -144,7 +157,7 @@ CallbackReturn BalltzeDynamixelSystem::on_init(const hardware_interface::Hardwar
     }
   }
 
-  broadcast_motor_ = std::make_unique<ax_12_a_motor::AX12AMotor>(254, portHandler_, packetHandler_);
+  broadcast_motor_ = std::make_unique<ax_12_a_motor::AX12AMotor>(254, false, portHandler_, packetHandler_);
 
   return CallbackReturn::SUCCESS;
 }
@@ -358,7 +371,7 @@ CallbackReturn BalltzeDynamixelSystem::on_error(const rclcpp_lifecycle::State&)
   return CallbackReturn::SUCCESS;
 }
 
-return_type BalltzeDynamixelSystem::read(const rclcpp::Time&, const rclcpp::Duration&)
+return_type BalltzeDynamixelSystem::read()
 {
   for (auto & joint : info_.joints) {
     motors_.at(joint.name)->qeurry_joint();
@@ -387,7 +400,7 @@ return_type BalltzeDynamixelSystem::read(const rclcpp::Time&, const rclcpp::Dura
   return return_type::OK;
 }
 
-return_type BalltzeDynamixelSystem::write(const rclcpp::Time&, const rclcpp::Duration&)
+return_type BalltzeDynamixelSystem::write()
 {
   for (auto & joint : info_.joints) {
     if (has_effort_interface_) {
@@ -400,6 +413,7 @@ return_type BalltzeDynamixelSystem::write(const rclcpp::Time&, const rclcpp::Dur
     else {
       motors_.at(joint.name)->set_state(
         pos_commands_.at(joint.name),
+        // 114.0f * (2.0f * M_PI / 60.0f),
         vel_commands_.at(joint.name),
         1.5
       );

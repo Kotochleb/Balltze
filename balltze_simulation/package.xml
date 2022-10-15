@@ -36,7 +36,7 @@
   <depend>ros2controlcli</depend>
   <depend>xacro</depend>
   <depend>ignition-gazebo6</depend>
-  <depend>rqt_joint_trajectory_controller</depend>
+  <!-- <depend>rqt_joint_trajectory_controller</depend> -->
 
   <depend>balltze_description</depend>
 

@@ -132,10 +132,10 @@ void AX12AMotor::qeurry_joint() {
     effort_ = std::numeric_limits<double>::quiet_NaN();
   }
   else {
-    position_ = data_to_pos(&data[0]);
-    velocity_ = data_to_vel(&data[2]);
+    position_ = data_to_pos(&data[0]) * direction_;
+    velocity_ = data_to_vel(&data[2]) * direction_;
     if (enabled_) {
-      effort_ = data_to_eff(&data[4]);
+      effort_ = data_to_eff(&data[4]) * direction_;
     }
     else {
       effort_ = 0.0f;
@@ -195,9 +195,9 @@ void AX12AMotor::eff_to_data(float val, uint8_t *data) {
 void AX12AMotor::set_state(float pos, float vel, float eff) {
   uint8_t data[GOAL_NUM_BUTES_];
 
-  pos_to_data(pos, &data[0]);
-  vel_to_data(vel, &data[2]);
-  eff_to_data(eff, &data[4]);
+  pos_to_data(pos * direction_, &data[0]);
+  vel_to_data(vel * direction_, &data[2]);
+  eff_to_data(eff * direction_, &data[4]);
 
   packetHandler_->regWriteTxRx(portHandler_.get(), id_, GOAL_POSITION_ADDRES_,
       GOAL_NUM_BUTES_, data, &error_code_);
