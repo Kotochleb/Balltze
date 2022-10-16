@@ -54,11 +54,11 @@
       max_linear_velocity_x : 0.1
       max_linear_velocity_y : 0.1
       max_angular_velocity_z : 0.1
-      com_x_translation: 0.0
-      swing_height : 0.05
-      stance_depth : 0.00
-      stance_duration : 0.08
-      nominal_height : 0.1860
+      com_x_translation: 0.04
+      swing_height : 0.03
+      stance_depth : 0.0
+      stance_duration : 0.6
+      nominal_height : 0.25
 
 
 state_estimation_node:
@@ -72,5 +72,5 @@ quadruped_controller_node:
     publish_joint_states: false
     gazebo: false
     publish_joint_control: true
-    joint_controller_topic: "/champ/joint_trajectory"
-    loop_rate: 20.0
+    joint_controller_topic: "/joint_trajectory_controller/joint_trajectory"
+    loop_rate: 25.0

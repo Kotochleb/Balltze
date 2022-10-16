@@ -413,8 +413,8 @@ return_type BalltzeDynamixelSystem::write()
     else {
       motors_.at(joint.name)->set_state(
         pos_commands_.at(joint.name),
-        // 114.0f * (2.0f * M_PI / 60.0f),
-        vel_commands_.at(joint.name),
+        114.0f * (2.0f * M_PI / 60.0f),
+        // vel_commands_.at(joint.name),
         1.5
       );
     }

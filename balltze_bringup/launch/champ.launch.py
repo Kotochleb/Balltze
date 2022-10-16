@@ -43,7 +43,7 @@ def generate_launch_description():
         ],
         remappings=[
             ("/cmd_vel/smooth", "/cmd_vel"),
-            ("/joint_states", "/joint_states/offset")
+            # ("/joint_states", "/joint_states/offset")
         ],
     )
 
@@ -55,26 +55,26 @@ def generate_launch_description():
             robot_description_string,
             champ_config
         ],
-        remappings=[
-            ("/joint_states", "/joint_states/offset")
-        ],
+        # remappings=[
+        #     ("/joint_states", "/joint_states/offset")
+        # ],
     )
 
-    message_realy_node = Node(
-        package="balltze_msgs",
-        executable="message_relay_node",
-        output="screen",
-        parameters=[
-            joint_offset_config
-        ],
-        remappings=[
-            ("/joint_trajectory", "/champ/joint_trajectory"),
-            ("/joint_trajectory/offset", "/joint_trajectory_controller/joint_trajectory")
-        ],
-    )
+    # message_realy_node = Node(
+    #     package="balltze_msgs",
+    #     executable="message_relay_node",
+    #     output="screen",
+    #     parameters=[
+    #         joint_offset_config
+    #     ],
+    #     remappings=[
+    #         ("/joint_trajectory", "/champ/joint_trajectory"),
+    #         ("/joint_trajectory/offset", "/joint_trajectory_controller/joint_trajectory")
+    #     ],
+    # )
 
     return LaunchDescription([
         quadruped_controller_node,
         state_estimator_node,
-        message_realy_node
+        # message_realy_node
     ])
