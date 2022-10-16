@@ -1,81 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- base_link defining macro -->]
-  <xacro:macro name="body" params="props use_ros_path">
+  <xacro:macro name="body">
 
-    <link name="dummy">
-      <inertial>
-        <mass value="0.00000000001" />
-        <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
-      </inertial>
-    </link> 
+    <link name="base_link"></link> 
 
-    <link name="base_link">
-        <xacro:property name="visual_mesh_props" value="${props['link']['mesh'][0]}" />
-        <xacro:property name="collision_mesh_props" value="${props['link']['collision'][0]}" />
-        <xacro:property name="length_props" value="${props['link']['length'][0]}" />
-        <xacro:property name="width_props" value="${props['link']['width'][0]}" />
-        <xacro:property name="thickness_props" value="${props['link']['thickness'][0]}" />
-        <xacro:property name="origin_porps" value="${props['link']['origin'][0]}" />
-        <xacro:property name="mass_porps" value="${props['link']['mass'][0]}" />
-        <xacro:property name="inertia_porps" value="${props['link']['inertia'][0]}" />
-
-       <visual>
+    <link name="body_link">
+      <visual>
         <geometry>
-        <xacro:property name="mesh" value="${visual_mesh_props}" />
-        <xacro:if value="${mesh == 'None'}">
-          <box size="${length_props}
-                     ${width_props}
-                     ${thickness_props}" />
-        </xacro:if>
-        <xacro:unless value="${mesh == 'None'}">
-          <xacro:if value="${use_ros_path}">
-            <mesh filename="$(find balltze_description)/meshes/${mesh}" scale="1 1 1" />
-          </xacro:if>
-          <xacro:unless value="${use_ros_path}">
-            <mesh filename="$(cwd)/meshes/${mesh}" scale="1 1 1" />
-          </xacro:unless>
-        </xacro:unless>
+          <mesh filename="file://$(find balltze_description)/meshes/body_link.stl" scale="0.5 0.5 0.5" />
         </geometry>
-        <origin xyz="0 0 0" />
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
       </visual>
 
       <collision>
         <geometry>
-        <xacro:property name="mesh" value="${collision_mesh_props}" />
-        <xacro:if value="${mesh == 'None'}">
-          <box size="${length_props}
-                     ${width_props}
-                     ${thickness_props}" />
-        </xacro:if>
-        <xacro:unless value="${mesh == 'None'}">
-          <xacro:if value="${use_ros_path}">
-            <mesh filename="$(find balltze_description)/meshes/${mesh}" scale="1 1 1" />
-          </xacro:if>
-          <xacro:unless value="${use_ros_path}">
-            <mesh filename="$(cwd)/meshes/${mesh}" scale="1 1 1" />
-          </xacro:unless>
-        </xacro:unless>
+          <mesh filename="file://$(find balltze_description)/meshes/body_link_collision.stl" scale="0.5 0.5 0.5" />
         </geometry>
-      </collision>`
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      </collision>
 
       <inertial>
-          <mass value="${mass_porps}" />
-          <inertia ixx="${inertia_porps['ixx']}"
-                   ixy="${inertia_porps['ixy']}"
-                   ixz="${inertia_porps['ixz']}"
-                   iyy="${inertia_porps['iyy']}"
-                   iyz="${inertia_porps['iyz']}"
-                   izz="${inertia_porps['izz']}" />
+          <mass value="1.0" />
+          <inertia ixx="0.1" ixy="0.0" ixz="0.0"
+                             iyy="0.1" iyz="0.0"
+                                       izz="0.1" />
       </inertial>
     </link>
 
-    <joint name="dummy_to_base_link_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <parent link="dummy"/>
-      <child link="base_link"/>
+    <link name="imu_link"></link>
+
+    <joint name="base_link_to_body_link_joint" type="fixed">
+      <origin xyz="0.0 0.0 0.002" rpy="0.0 0.0 0.0"/>
+      <parent link="base_link"/>
+      <child link="body_link"/>
     </joint>
+
+    <joint name="body_link_to_imu_link_joint" type="fixed">
+      <origin xyz="0.0 0.0 0.01" rpy="0.0 0.0 0.0"/>
+      <parent link="body_link"/>
+      <child link="imu_link"/>
+    </joint>
+
+    <gazebo reference="imu_link">
+      <sensor name="imu_sensor" type="imu">
+        <always_on>1</always_on>
+        <update_rate>50.0</update_rate>
+        <visualize>true</visualize>
+        <topic>imu</topic>
+      </sensor>
+    </gazebo>
   </xacro:macro>
 
 </robot>

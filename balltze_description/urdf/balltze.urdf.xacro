@@ -1,30 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0'?>
 <robot name="balltze" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:arg name="props_path" default="$(find balltze_description)/config/props.yaml" />
-  <xacro:arg name="use_ros_path" default="True" />
+  <xacro:arg name="use_sim" default="false" />
+  <xacro:arg name="use_gpu" default="false" />
 
-  <!-- CONDITIONAL BLOCKS -->
-  <xacro:property name="_use_ros_path" value="$(arg use_ros_path)" />
-  <xacro:if value="${_use_ros_path}">
-    <xacro:include filename="$(find balltze_description)/urdf/body.urdf.xacro" ns="body" />
-    <xacro:include filename="$(find balltze_description)/urdf/leg.urdf.xacro" ns="leg" />
-  </xacro:if>
-  <xacro:unless value="${_use_ros_path}">
-    <xacro:include filename="$(cwd)/urdf/body.urdf.xacro" ns="body" />
-    <xacro:include filename="$(cwd)/urdf/leg.urdf.xacro" ns="leg" />
-  </xacro:unless>
-
-  <xacro:property name="props_file" value="$(arg props_path)"  />
-  <xacro:property name="props" value="${load_yaml(props_file)}" />
-
-  <!-- BODY DECLARATION -->
-  <xacro:body.body props="${props['base_link']}" use_ros_path="$(arg use_ros_path)" />
-
-  <!-- LED DECLARATION -->
-  <xacro:leg.leg leg_prefix="fr" props="${props}" use_ros_path="$(arg use_ros_path)" />
-  <xacro:leg.leg leg_prefix="fl" props="${props}" use_ros_path="$(arg use_ros_path)" />
-  <xacro:leg.leg leg_prefix="rr" props="${props}" use_ros_path="$(arg use_ros_path)" />
-  <xacro:leg.leg leg_prefix="rl" props="${props}" use_ros_path="$(arg use_ros_path)" />
-
+  <xacro:include filename="$(find balltze_description)/urdf/balltze_macro.urdf.xacro" ns="balltze" />
+  <xacro:balltze.balltze use_sim="$(arg use_sim)" use_gpu="$(arg use_gpu)" />
+  
 </robot>

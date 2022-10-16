@@ -3,23 +3,29 @@
 <package format="3">
   <name>balltze_msgs</name>
   <version>1.0.0</version>
-  <description>A package containing messages used by Balltze robot.</description>
+  <description>A messages used by Balltze robot.</description>
   <maintainer email="krzy.wojciecho@gmail.com">Krzysztof Wojciechowski</maintainer>
   <license>MIT</license>
 
-  <buildtool_depend>ament_cmake</buildtool_depend>
+  <url type="website">https://github.com/Kotochleb/Balltze</url>
+  <url type="bugtracker">https://github.com/Kotochleb/Balltze/issues</url>
+  <url type="repository">https://github.com/Kotochleb/Balltze/</url>
 
+  <author>Krzysztof Wojciechowski</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
   <buildtool_depend>rosidl_default_generators</buildtool_depend>
 
-  <build_depend>std_msgs</build_depend>
-  <build_depend>trajectory_msgs</build_depend>
+  <depend>builtin_interfaces</depend>
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>trajectory_msgs</depend>
 
-  <exec_depend>std_msgs</exec_depend>
-  <exec_depend>trajectory_msgs</exec_depend>
-  <exec_depend>rosidl_default_runtime</exec_depend>
-
+  <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
-
+  
+  <exec_depend>rosidl_default_runtime</exec_depend>
   <member_of_group>rosidl_interface_packages</member_of_group>
 
   <export>

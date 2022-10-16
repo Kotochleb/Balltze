@@ -1,0 +1,76 @@
+/**:
+  ros__parameters:
+    links_map:
+      base: body_link
+      left_front:
+        - fl_link_1
+        - fl_link_2
+        - fl_link_3
+        - fl_tip
+      right_front:
+        - fr_link_1
+        - fr_link_2
+        - fr_link_3
+        - fr_tip
+      left_hind:
+        - rl_link_1
+        - rl_link_2
+        - rl_link_3
+        - rl_tip
+      right_hind:
+        - rr_link_1
+        - rr_link_2
+        - rr_link_3
+        - rr_tip
+
+
+    joints_map:
+      left_front:
+        - fl_joint_1
+        - fl_joint_2
+        - fl_joint_3
+        - fl_joint_4
+      right_front:
+        - fr_joint_1
+        - fr_joint_2
+        - fr_joint_3
+        - fr_joint_4
+      left_hind:
+        - rl_joint_1
+        - rl_joint_2
+        - rl_joint_3
+        - rl_joint_4
+      right_hind:
+        - rr_joint_1
+        - rr_joint_2
+        - rr_joint_3
+        - rr_joint_4
+
+ 
+    gait:
+      knee_orientation : ">>"
+      pantograph_leg : false
+      odom_scaler: 0.9
+      max_linear_velocity_x : 0.1
+      max_linear_velocity_y : 0.1
+      max_angular_velocity_z : 0.1
+      com_x_translation: 0.04
+      swing_height : 0.03
+      stance_depth : 0.0
+      stance_duration : 0.6
+      nominal_height : 0.25
+
+
+state_estimation_node:
+  ros__parameters:
+    orientation_from_imu: false
+
+
+quadruped_controller_node:
+  ros__parameters:
+    publish_foot_contacts: true
+    publish_joint_states: false
+    gazebo: false
+    publish_joint_control: true
+    joint_controller_topic: "/joint_trajectory_controller/joint_trajectory"
+    loop_rate: 25.0

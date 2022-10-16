@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>balltze_simulation</name>
+  <version>0.0.0</version>
+  <description>Balltze Ignition-Gazebo simulation</description>
+  <maintainer email="krzy.wojciecho@gmail.com">Krzysztof Wojciechowski</maintainer>
+  <license>MIT</license>
+
+  <url type="website">https://github.com/Kotochleb/Balltze</url>
+  <url type="bugtracker">https://github.com/Kotochleb/Balltze/issues</url>
+  <url type="repository">https://github.com/Kotochleb/Balltze/</url>
+
+  <author>Krzysztof Wojciechowski</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <depend>hardware_interface</depend>
+  <depend>controller_manager</depend>
+  <depend>pluginlib</depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
+  <depend>ament_index_python</depend>
+  <depend>ign_ros2_control</depend>
+  <depend>imu_sensor_broadcaster</depend>
+  <depend>joint_state_broadcaster</depend>
+  <depend>joint_trajectory_controller</depend>
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+  <depend>ros2launch</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>ros_ign_gazebo</depend>
+  <depend>ros2controlcli</depend>
+  <depend>xacro</depend>
+  <depend>ignition-gazebo6</depend>
+  <!-- <depend>rqt_joint_trajectory_controller</depend> -->
+
+  <depend>balltze_description</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

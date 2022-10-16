@@ -3,12 +3,27 @@
 <package format="3">
   <name>balltze_description</name>
   <version>1.0.0</version>
-  <description>URDF generator for quadruped robot</description>
+  <description>Robot description for Balltze robot</description>
   <maintainer email="krzy.wojciecho@gmail.com">Krzysztof Wojciechowski</maintainer>
   <license>MIT</license>
 
+  <url type="website">https://github.com/Kotochleb/Balltze</url>
+  <url type="bugtracker">https://github.com/Kotochleb/Balltze/issues</url>
+  <url type="repository">https://github.com/Kotochleb/Balltze/</url>
+
+  <author>Krzysztof Wojciechowski</author>
+
   <buildtool_depend>ament_cmake</buildtool_depend>
   <depend>urdf</depend>
+  <depend>xacro</depend>
+  
+  <exec_depend>hardware_interface</exec_depend>
+  <exec_depend>imu_sensor_broadcaster</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>balltze_hardware</exec_depend>
+  <exec_depend condition="$BALLTZE_BUILD_TYPE == 'simulation'">ign_ros2_control</exec_depend>
+  <exec_depend condition="$BALLTZE_BUILD_TYPE == 'simulation'">joint_state_publisher_gui</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

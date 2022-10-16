@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <xacro:macro name="balltze" params="
+    use_sim:=false
+    use_gpu:=false">
+
+    <xacro:include filename="$(find balltze_description)/urdf/body.urdf.xacro" ns="body" />
+    <xacro:include filename="$(find balltze_description)/urdf/leg.urdf.xacro" ns="leg" />
+
+    <xacro:if value="${use_sim}">
+      <xacro:include filename="$(find balltze_description)/urdf/gazebo.ros2_control.xacro" ns="control" />
+    </xacro:if>  
+    <xacro:unless value="${use_sim}">
+      <xacro:include filename="$(find balltze_description)/urdf/hardware.ros2_control.xacro" ns="control" />
+    </xacro:unless>  
+
+    <!-- BODY DECLARATION -->
+    <xacro:body.body />
+
+    <!-- LED DECLARATION -->
+    <xacro:leg.leg leg_prefix="fl" robot_width="0.15" robot_length="0.3" />
+    <xacro:leg.leg leg_prefix="fr" robot_width="0.15" robot_length="0.3" />
+    <xacro:leg.leg leg_prefix="rl" robot_width="0.15" robot_length="0.3" />
+    <xacro:leg.leg leg_prefix="rr" robot_width="0.15" robot_length="0.3" />
+
+    <xacro:control.ros2_control_system />
+
+  </xacro:macro>
+
+</robot>

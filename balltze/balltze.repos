@@ -1,0 +1,40 @@
+repositories:
+  vcs_repos/ros2_controllers:
+    type: git
+    url: https://github.com/ros-controls/ros2_controllers.git
+    version: galactic
+
+  # vcs_repos/kinematics_interface:
+  #   type: git
+  #   url: https://github.com/ros-controls/kinematics_interface.git
+  #   version: master
+    
+  vcs_repos/champ:
+    type: git
+    url: https://github.com/chvmp/champ.git
+    version: ros2
+
+  vcs_repos/champ_teleop:
+    type: git
+    url: https://github.com/chvmp/champ_teleop
+    version: ros2
+
+  # vcs_repos/ecl_core:
+  #   type: git
+  #   url: https://github.com/stonier/ecl_core.git
+  #   version: 1.2.1
+
+  # vcs_repos/ecl_lite:
+  #   type: git
+  #   url: https://github.com/stonier/ecl_lite.git
+  #   version: 1.2.0
+
+  # vcs_repos/ecl_tools:
+  #   type: git
+  #   url: https://github.com/stonier/ecl_tools.git
+  #   version: 1.0.3
+
+  # vcs_repos/sophus:
+  #   type: git
+  #   url: https://github.com/stonier/sophus.git
+  #   version: 1.3.1

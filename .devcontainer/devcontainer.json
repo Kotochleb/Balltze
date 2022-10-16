@@ -3,9 +3,9 @@
 		"compose.yaml"
 	],
 	"initializeCommand": "xhost +local:docker",
-	"onCreateCommand": "/bin/bash /ros2_ws/setup.sh",
+	// "onCreateCommand": "/bin/bash /home/balltze/ros2_ws/setup.sh",
 	"service": "workspace",
-	"workspaceFolder": "/ros2_ws/src",
+	"workspaceFolder": "/home/balltze/ros2_ws/src",
 	"shutdownAction": "stopCompose",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {

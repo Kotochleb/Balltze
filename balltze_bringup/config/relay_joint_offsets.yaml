@@ -1,0 +1,44 @@
+/**:
+  ros__parameters:
+    joints: 
+      - fl_joint_1
+      - fl_joint_2
+      - fl_joint_3
+      - fr_joint_1
+      - fr_joint_2
+      - fr_joint_3
+      - rl_joint_1
+      - rl_joint_2
+      - rl_joint_3
+      - rr_joint_1
+      - rr_joint_2
+      - rr_joint_3
+
+    offset:
+      command:
+        fl_joint_1: 0.0 
+        fl_joint_2: 0.0
+        fl_joint_3: 0.0
+        fr_joint_1: 0.0
+        fr_joint_2: 0.0
+        fr_joint_3: 0.0
+        rl_joint_1: 0.0
+        rl_joint_2: 0.0
+        rl_joint_3: 0.0 
+        rr_joint_1: 0.0
+        rr_joint_2: 0.0
+        rr_joint_3: 0.0 
+
+      state:
+        fl_joint_1: 0.0
+        fl_joint_2: 0.0 
+        fl_joint_3: 0.0
+        fr_joint_1: 0.0
+        fr_joint_2: 0.0 
+        fr_joint_3: 0.0
+        rl_joint_1: 0.0
+        rl_joint_2: 0.0 
+        rl_joint_3: 0.0 
+        rr_joint_1: 0.0
+        rr_joint_2: 0.0 
+        rr_joint_3: 0.0 

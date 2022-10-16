@@ -18,16 +18,13 @@
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
-  <!-- <depend>hardware_interface</depend>
+  <depend>hardware_interface</depend>
   <depend>controller_manager</depend>
-  <depend>pluginlib</depend> -->
+  <depend>pluginlib</depend>
   <depend>dynamixel_sdk</depend>
-
-  <depend>std_msgs</depend>
-  <depend>sensor_msgs</depend>
-  <depend>trajectory_msgs</depend> 
-  <depend>control_msgs</depend>
-
+  <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
+  <exec_depend>ros2controlcli</exec_depend>
 
   <test_depend>ament_lint_common</test_depend>
   <test_depend>ament_lint_auto</test_depend>
@@ -35,6 +32,5 @@
 
   <export>
     <build_type>ament_cmake</build_type>
-    <gazebo_ros2_control plugin="${prefix}/balltze_hardware_plugins.xml"/>
   </export>
 </package>
